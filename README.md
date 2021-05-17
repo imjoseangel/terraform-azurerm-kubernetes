@@ -65,3 +65,11 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.aks.cluster_ca_certificate)
 }
 ```
+
+## Authors
+
+Originally created by [Jose Angel Munoz](http://github.com/imjoseangel)
+
+## License
+
+[MIT](LICENSE)
