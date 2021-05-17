@@ -39,7 +39,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   default_node_pool {
     name                = "default"
-    node_count          = 3
+    node_count          = var.node_count
     vm_size             = var.default_vm_size
     enable_auto_scaling = true
     vnet_subnet_id      = var.vnet_subnet_id
@@ -47,7 +47,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     availability_zones  = var.availability_zones
     max_count           = var.max_default_node_count
     min_count           = var.min_default_node_count
-    os_disk_size_gb     = 128
+    os_disk_size_gb     = var.os_disk_size_gb
   }
 
   linux_profile {

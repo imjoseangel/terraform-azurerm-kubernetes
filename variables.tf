@@ -89,6 +89,12 @@ variable "public_ssh_key" {
   default     = "~/.ssh/id_rsa.pub"
 }
 
+variable "node_count" {
+  description = "The number of Nodes that should exist in the Pool. Please set `node_count` `null` while `enable_auto_scaling` is `true` to avoid possible `node_count` changes."
+  type        = number
+  default     = null
+}
+
 variable "create_ingress" {
   description = "Deploy the Application Gateway ingress controller to this Kubernetes Cluster"
   type        = bool
@@ -105,6 +111,12 @@ variable "vnet_subnet_id" {
   description = "(Optional) The ID of a Subnet where the Kubernetes Node Pool should exist. Changing this forces a new resource to be created."
   type        = string
   default     = null
+}
+
+variable "os_disk_size_gb" {
+  description = "Disk size of nodes in GBs."
+  type        = number
+  default     = 128
 }
 
 variable "tags" {
