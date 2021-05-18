@@ -30,7 +30,7 @@ resource "azurerm_subnet" "akssubnet" {
 }
 
 module "aks" {
-  source                    = "visma-raet/azure/aks"
+  source                    = "https://github.com/visma-raet/terraform-azurerm-kubernetes.git"
   name                      = "aksname"
   resource_group_name       = "rsg-aks"
   location                  = "westeurope"
