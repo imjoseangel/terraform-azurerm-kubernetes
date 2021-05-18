@@ -41,7 +41,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     name                = "default"
     node_count          = var.node_count
     vm_size             = var.default_vm_size
-    enable_auto_scaling = true
+    enable_auto_scaling = var.enable_auto_scaling
     vnet_subnet_id      = var.vnet_subnet_id
     type                = "VirtualMachineScaleSets"
     availability_zones  = var.availability_zones

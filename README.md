@@ -41,6 +41,9 @@ module "aks" {
   private_cluster_enabled   = false # default value
   vnet_subnet_id            = azurerm_subnet.akssubnet.id
   create_ingress            = false
+  enable_auto_scaling       = true
+  max_default_node_count    = 3
+  min_default_node_count    = 1
 }
 
 resource "azurerm_role_assignment" "resource_group" {

@@ -95,6 +95,13 @@ variable "node_count" {
   default     = null
 }
 
+variable "enable_auto_scaling" {
+  description = "Enable node pool autoscaling"
+  type        = bool
+  default     = false
+}
+
+
 variable "create_ingress" {
   description = "Deploy the Application Gateway ingress controller to this Kubernetes Cluster"
   type        = bool
