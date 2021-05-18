@@ -22,10 +22,6 @@ data "azurerm_virtual_network" "aksvnet" {
   resource_group_name = data.azurerm_resource_group.aksvnetrsg.name
 }
 
-data "azuread_group" "aks_cluster_admins" {
-  name = "AKS-cluster-admins"
-}
-
 resource "azurerm_subnet" "akssubnet" {
   name                 = "subnet-aksnodes"
   resource_group_name  = data.azurerm_resource_group.aksvnetrsg.name
