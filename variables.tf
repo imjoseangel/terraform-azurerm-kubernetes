@@ -56,13 +56,13 @@ variable "authorized_ips" {
 variable "max_default_node_count" {
   description = "(Required) The maximum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
   type        = number
-  default     = 15
+  default     = null
 }
 
 variable "min_default_node_count" {
   description = "(Required) The minimum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
   type        = number
-  default     = 3
+  default     = null
 }
 
 variable "node_resource_group" {
