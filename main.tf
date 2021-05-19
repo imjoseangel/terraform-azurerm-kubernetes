@@ -37,17 +37,35 @@ resource "azurerm_kubernetes_cluster" "main" {
   sku_tier                        = var.sku_tier
   private_cluster_enabled         = var.private_cluster_enabled
 
-  default_node_pool {
-    name                = "default"
-    node_count          = var.node_count
-    vm_size             = var.default_vm_size
-    enable_auto_scaling = var.enable_auto_scaling
-    vnet_subnet_id      = var.vnet_subnet_id
-    type                = "VirtualMachineScaleSets"
-    availability_zones  = var.availability_zones
-    max_count           = var.max_default_node_count
-    min_count           = var.min_default_node_count
-    os_disk_size_gb     = var.os_disk_size_gb
+  dynamic "default_node_pool" {
+    for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
+    content {
+      name                = var.node_pool_name
+      node_count          = var.node_count
+      vm_size             = var.default_vm_size
+      os_disk_size_gb     = var.os_disk_size_gb
+      vnet_subnet_id      = var.vnet_subnet_id
+      enable_auto_scaling = var.enable_auto_scaling
+      max_count           = null
+      min_count           = null
+      availability_zones  = var.availability_zones
+      type                = "VirtualMachineScaleSets"
+    }
+  }
+
+  dynamic "default_node_pool" {
+    for_each = var.enable_auto_scaling == true ? ["default_node_pool_auto_scaled"] : []
+    content {
+      name                = var.node_pool_name
+      vm_size             = var.default_vm_size
+      os_disk_size_gb     = var.os_disk_size_gb
+      vnet_subnet_id      = var.vnet_subnet_id
+      enable_auto_scaling = var.enable_auto_scaling
+      max_count           = var.max_default_node_count
+      min_count           = var.min_default_node_count
+      availability_zones  = var.availability_zones
+      type                = "VirtualMachineScaleSets"
+    }
   }
 
   linux_profile {

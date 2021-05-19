@@ -71,6 +71,12 @@ variable "node_resource_group" {
   default     = null
 }
 
+variable "node_pool_name" {
+  description = "The default Azure AKS nodepool name."
+  type        = string
+  default     = "default"
+}
+
 variable "network_plugin" {
   description = "Network plugin to use for networking."
   type        = string
