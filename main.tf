@@ -86,7 +86,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     admin_username = "k8s"
 
     ssh_key {
-      key_data = replace(var.public_ssh_key == "" ? module.ssh-key.public_ssh_key : var.public_ssh_key, "\n", "")
+      key_data = replace(var.public_ssh_key == "" ? tls_private_key.ssh.public_key_openssh : var.public_ssh_key, "\n", "")
     }
   }
 
