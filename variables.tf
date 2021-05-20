@@ -92,7 +92,7 @@ variable "network_policy" {
 variable "public_ssh_key" {
   description = "A custom ssh key to control access to the AKS cluster"
   type        = string
-  default     = "~/.ssh/id_rsa.pub"
+  default     = ""
 }
 
 variable "node_count" {
