@@ -23,6 +23,14 @@ resource "azurerm_resource_group" "rg" {
   tags     = merge({ "ResourceName" = format("%s", var.resource_group_name) }, var.tags, )
 }
 
+#---------------------------------------------------------
+# SSH Key Creation or selection
+#---------------------------------------------------------
+
+module "ssh-key" {
+  source         = "./modules/ssh-key"
+  public_ssh_key = var.public_ssh_key == "" ? "" : var.public_ssh_key
+}
 
 #---------------------------------------------------------
 # Kubernetes Creation or selection
@@ -72,9 +80,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     admin_username = "k8s"
 
     ssh_key {
-      key_data = var.public_ssh_key
+      key_data = replace(var.public_ssh_key == "" ? module.ssh-key.public_ssh_key : var.public_ssh_key, "\n", "")
     }
   }
+
   addon_profile {
     oms_agent {
       enabled = false
@@ -108,7 +117,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   lifecycle {
     ignore_changes = [
-      default_node_pool[0].node_count, tags
+      default_node_pool[0].node_count, tags, linux_profile.0.ssh_key
     ]
   }
 
