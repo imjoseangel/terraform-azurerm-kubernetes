@@ -30,6 +30,8 @@ jobs:
         body: |
           # Terraform Module - Azurerm Kubernetes
 
+          [![Terraform](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
+
           A [Terraform][2] module to deploys a Kubernetes cluster on AKS with application gateway support.
 
           By [visma-raet][3]
