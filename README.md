@@ -1,6 +1,6 @@
 # terraform-azurerm-kubernetes
 
-## Deploys a Kubernetes cluster on AKS with monitoring support through Azure Log Analytics
+## Deploys a Kubernetes cluster on AKS with application gateway support
 
 This Terraform module deploys a Kubernetes cluster on Azure using AKS (Azure Kubernetes Service)
 
