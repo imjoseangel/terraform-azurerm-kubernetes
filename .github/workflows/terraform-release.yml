@@ -1,0 +1,54 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+rc[0-9]+'
+
+name: Create Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Get current tag
+      id: currenttag
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ steps.currenttag.outputs.tag }}
+        release_name: Release ${{ steps.currenttag.outputs.tag }}
+        body: |
+          # Terraform Module - Azurerm Kubernetes
+
+          A [Terraform][2] module to deploys a Kubernetes cluster on AKS with application gateway support.
+
+          By [visma-raet][3]
+
+          Use with:
+          ```bash
+          export ARM_CLIENT_ID=""
+          export ARM_CLIENT_SECRET=""
+          export ARM_SUBSCRIPTION_ID=""
+          export ARM_TENANT_ID=""
+
+          terraform init
+          terraform apply
+          ```
+
+          ## License
+
+          Licensed under [the MIT License][1].
+
+          [1]: https://github.com/visma-raet/terraform-azurerm-kubernetes/blob/devel/LICENSE
+          [2]: https://www.terraform.io/
+          [3]: https://www.vismaraet.nl/
+        draft: false
+        prerelease: false
