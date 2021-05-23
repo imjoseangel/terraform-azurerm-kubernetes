@@ -67,7 +67,7 @@ provider "kubernetes" {
 
 ## Authors
 
-Originally created by [Jose Angel Munoz](http://github.com/imjoseangel)
+Originally created by [Visma-raet](http://github.com/visma-raet)
 
 ## License
 
