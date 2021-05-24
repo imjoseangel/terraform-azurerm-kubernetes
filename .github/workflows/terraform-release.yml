@@ -14,19 +14,18 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      
+
     - name: Get current tag
       id: currenttag
       run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      
+
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB }} # This token is provided by Actions, you do not need to create your own token
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ steps.currenttag.outputs.tag }}
-        release_name: Release ${{ steps.currenttag.outputs.tag }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.currenttag.outputs.tag }}
+        name: Release ${{ steps.currenttag.outputs.tag }}
         body: |
           # Terraform Module - Azurerm Kubernetes
 
