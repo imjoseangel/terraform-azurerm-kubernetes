@@ -9,8 +9,8 @@ locals {
 data "azurerm_client_config" "current" {}
 
 #---------------------------------------------------------
-# Resource Group Creation or selection - Default is "false"
-#----------------------------------------------------------
+# Resource Group Creation or selection - Default is "true"
+#---------------------------------------------------------
 data "azurerm_resource_group" "rgrp" {
   count = var.create_resource_group == false ? 1 : 0
   name  = var.resource_group_name
