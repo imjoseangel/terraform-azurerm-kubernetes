@@ -1,0 +1,32 @@
+---
+fail_fast: false
+
+repos:
+
+  - repo: local
+    hooks:
+      - id: forbid-binary
+        name: forbid-binary (local)
+        language: script
+        entry: hooks/forbid-binary
+        types: ['binary']
+        exclude: >
+          (?x)^(
+            screenshot.png
+          )$
+
+      - id: git-dirty
+        name: git-dirty (local)
+        language: script
+        entry: hooks/git-dirty
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
