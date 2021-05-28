@@ -93,6 +93,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   addon_profile {
     oms_agent {
       enabled = var.oms_agent_enabled
+      log_analytics_workspace_id = var.oms_agent_enabled ? azurerm_log_analytics_workspace.main[0].id : null
     }
 
     http_application_routing {
