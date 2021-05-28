@@ -25,7 +25,7 @@ repos:
         description: TFsec is a tool to statically analyze Terraform templates to spot potential security issues, uses systems installed tfsec.
         language: system
         entry: tfsec
-        types: [terraform]
+        files: .tf
 
       - id: detect-secrets
         name: Detect Secrets
