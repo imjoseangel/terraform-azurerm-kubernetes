@@ -37,6 +37,7 @@ module "aks" {
   prefix                    = "aksdns"
   sku_tier                  = "Free"
   create_resource_group     = true
+  oms_agent_enabled         = false
   agents_availability_zones = ["1", "2"]
   private_cluster_enabled   = false # default value
   vnet_subnet_id            = azurerm_subnet.akssubnet.id
