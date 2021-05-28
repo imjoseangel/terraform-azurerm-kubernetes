@@ -23,7 +23,7 @@ repos:
       - id: tfsec-system
         name: TFSec system (local)
         description: TFsec is a tool to statically analyze Terraform templates to spot potential security issues, uses systems installed tfsec.
-        language: script
+        language: system
         entry: tfsec
         files: (\.tf)$
 
