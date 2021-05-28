@@ -42,14 +42,15 @@ jobs:
       run: terraform validate
 
     # Run the tfsec sarif check. Uses static analysis of your terraform templates to spot potential security issues.
-    - name: tfsec
+    - name: Terraform Security Analysis
+      id: tfsec
       uses: tfsec/tfsec-sarif-action@master
       with:
         sarif_file: tfsec.sarif
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     # Uploads results.sarif to GitHub repository using the upload-sarif action
-    - name: Upload SARIF file
+    - name: Terraform Security Report
+      id: tfsarif
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: tfsec.sarif
