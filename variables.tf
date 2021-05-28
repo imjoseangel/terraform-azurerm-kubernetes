@@ -107,6 +107,35 @@ variable "enable_auto_scaling" {
   default     = false
 }
 
+variable "oms_agent_enabled" {
+  description = "Deploy the OMS Agent to this Kubernetes Cluster"
+  type        = bool
+  default     = true
+}
+
+variable "log_analytics_workspace_id" {
+  description = "(Optional) The ID of the Log Analytics Workspace which the OMS Agent should send data to. Must be present if enabled is true."
+  type        = string
+  default     = null
+}
+
+variable "log_analytics_workspace_name" {
+  description = "(Optional) The name of the Analytics workspace"
+  type        = string
+  default     = null
+}
+
+variable "log_analytics_workspace_sku" {
+  description = "The SKU (pricing level) of the Log Analytics workspace. For new subscriptions the SKU should be set to PerGB2018"
+  type        = string
+  default     = "PerGB2018"
+}
+
+variable "log_retention_in_days" {
+  description = "The retention period for the logs in days"
+  type        = number
+  default     = 7
+}
 
 variable "create_ingress" {
   description = "Deploy the Application Gateway ingress controller to this Kubernetes Cluster"
@@ -126,10 +155,34 @@ variable "vnet_subnet_id" {
   default     = null
 }
 
+variable "load_balancer_sku" {
+  description = "(Optional) Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are Basic and Standard. Defaults to Standard."
+  type        = string
+  default     = "Standard"
+}
+
 variable "os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
   default     = 128
+}
+
+variable "enable_role_based_access_control" {
+  description = "Enable Role Based Access Control."
+  type        = bool
+  default     = true
+}
+
+variable "rbac_aad_managed" {
+  description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration."
+  type        = bool
+  default     = false
+}
+
+variable "rbac_aad_admin_group_object_ids" {
+  description = "Object ID of groups with admin access."
+  type        = list(string)
+  default     = null
 }
 
 variable "tags" {

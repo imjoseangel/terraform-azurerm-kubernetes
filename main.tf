@@ -92,7 +92,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   addon_profile {
     oms_agent {
-      enabled = false
+      enabled = var.oms_agent_enabled
     }
 
     http_application_routing {
@@ -110,13 +110,21 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   network_profile {
-    load_balancer_sku = "Standard"
+    load_balancer_sku = var.load_balancer_sku
     network_plugin    = var.network_plugin
     network_policy    = var.network_policy
   }
 
   role_based_access_control {
-    enabled = true
+    enabled = var.enable_role_based_access_control
+
+    dynamic "azure_active_directory" {
+      for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
+      content {
+        managed                = true
+        admin_group_object_ids = var.rbac_aad_admin_group_object_ids
+      }
+    }
   }
 
   tags = merge({ "ResourceName" = format("%s-%s", var.prefix, lower(replace(var.name, "/[[:^alnum:]]/", ""))) }, var.tags, )
@@ -127,4 +135,31 @@ resource "azurerm_kubernetes_cluster" "main" {
     ]
   }
 
+}
+
+resource "azurerm_log_analytics_workspace" "main" {
+  count               = var.oms_agent_enabled ? 1 : 0
+  name                = var.log_analytics_workspace_name == null ? "${var.prefix}-workspace" : var.log_analytics_workspace_name
+  location            = var.location
+  resource_group_name = local.resource_group_name
+  sku                 = var.log_analytics_workspace_sku
+  retention_in_days   = var.log_retention_in_days
+
+  tags = var.tags
+}
+
+resource "azurerm_log_analytics_solution" "main" {
+  count                 = var.oms_agent_enabled ? 1 : 0
+  solution_name         = "ContainerInsights"
+  location              = var.location
+  resource_group_name   = local.resource_group_name
+  workspace_resource_id = azurerm_log_analytics_workspace.main[0].id
+  workspace_name        = azurerm_log_analytics_workspace.main[0].name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/ContainerInsights"
+  }
+
+  tags = var.tags
 }
