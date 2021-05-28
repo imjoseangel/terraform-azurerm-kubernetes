@@ -132,9 +132,9 @@ variable "log_analytics_workspace_sku" {
 }
 
 variable "log_retention_in_days" {
-  description = "The retention period for the logs in days"
+  description = "The retention period for the logs in days. The expected value should be between 30 to 730"
   type        = number
-  default     = 7
+  default     = 30
 }
 
 variable "create_ingress" {
