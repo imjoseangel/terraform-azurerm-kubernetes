@@ -32,7 +32,7 @@ variable "default_vm_size" {
 variable "availability_zones" {
   description = "A list of Availability Zones across which the Node Pool should be spread. Changing this forces a new resource to be created."
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "sku_tier" {
