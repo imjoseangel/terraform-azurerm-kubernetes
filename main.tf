@@ -111,7 +111,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   network_profile {
-    load_balancer_sku = length(var.availability_zones) != 0 ? "Standard" : var.load_balancer_sku
+    load_balancer_sku = length(var.availability_zones) == 0 || var.availability_zones == null ? var.load_balancer_sku : "Standard"
     network_plugin    = var.network_plugin
     network_policy    = var.network_policy
   }
