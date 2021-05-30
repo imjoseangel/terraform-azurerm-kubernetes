@@ -76,5 +76,7 @@ Originally created by [Visma-raet](http://github.com/visma-raet)
 
 [MIT](LICENSE)
 
-[badge-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/workflows/terraform/badge.svg?event=push
-[link-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions?query=workflow%3Aterraform
+
+[![Terraform](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
+[badge-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg
+[link-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml
