@@ -56,7 +56,7 @@ jobs:
         sarif_file: tfsec.sarif
 
     # CStatic code analyzer for Infrastructure as Code with terrascan.
-    - name: Scan Code Base
+    - name: Terraform Scan Code Base
       uses: github/super-linter@v3
       env:
         VALIDATE_ALL_CODEBASE: true
