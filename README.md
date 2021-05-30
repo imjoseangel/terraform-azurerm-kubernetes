@@ -1,6 +1,6 @@
 # terraform-azurerm-kubernetes
 
-[![CI][badge-gh-actions]][link-gh-actions]
+[![Terraform](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
 
 ## Deploys a Kubernetes cluster on AKS with application gateway support. Monitoring support can be added through Azure Log Analytics.
 
@@ -75,8 +75,3 @@ Originally created by [Visma-raet](http://github.com/visma-raet)
 ## License
 
 [MIT](LICENSE)
-
-
-[![Terraform](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
-[badge-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg
-[link-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml
