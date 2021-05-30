@@ -86,7 +86,7 @@ variable "network_plugin" {
 variable "network_policy" {
   description = "Network policy to use for networking."
   type        = string
-  default     = "calico"
+  default     = null
 }
 
 variable "public_ssh_key" {
