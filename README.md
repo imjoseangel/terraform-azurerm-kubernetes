@@ -1,5 +1,7 @@
 # terraform-azurerm-kubernetes
 
+[![CI][badge-gh-actions]][link-gh-actions]
+
 ## Deploys a Kubernetes cluster on AKS with application gateway support. Monitoring support can be added through Azure Log Analytics.
 
 This Terraform module deploys a Kubernetes cluster on Azure using AKS (Azure Kubernetes Service)
@@ -73,3 +75,6 @@ Originally created by [Visma-raet](http://github.com/visma-raet)
 ## License
 
 [MIT](LICENSE)
+
+[badge-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/workflows/terraform/badge.svg?event=push
+[link-gh-actions]: https://github.com/visma-raet/terraform-azurerm-kubernetes/actions?query=workflow%3Aterraform
