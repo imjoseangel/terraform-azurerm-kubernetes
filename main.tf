@@ -43,7 +43,7 @@ resource "tls_private_key" "ssh" {
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
   name                            = format("%s-%s", var.prefix, lower(replace(var.name, "/[[:^alnum:]]/", "")))
-  location                        = var.location
+  location                        = local.location
   resource_group_name             = local.resource_group_name
   node_resource_group             = var.node_resource_group
   dns_prefix                      = var.prefix
