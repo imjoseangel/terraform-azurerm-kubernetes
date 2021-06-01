@@ -17,17 +17,11 @@ data "azurerm_resource_group" "rgrp" {
 }
 
 resource "azurerm_resource_group" "rg" {
+  #ts:skip=accurics.azure.NS.272 RSG lock should be skipped for now.
   count    = var.create_resource_group ? 1 : 0
   name     = lower(var.resource_group_name)
   location = var.location
   tags     = merge({ "ResourceName" = format("%s", var.resource_group_name) }, var.tags, )
-}
-
-resource "azurerm_management_lock" "rg-lock" {
-  name       = "resource-group-tflock"
-  scope      = azurerm_resource_group.rg.id
-  lock_level = "ReadOnly"
-  notes      = "This Resource Group is Read-Only"
 }
 
 #---------------------------------------------------------
@@ -38,12 +32,6 @@ resource "tls_private_key" "ssh" {
   algorithm = "RSA"
   rsa_bits  = 2048
 }
-
-# resource "local_file" "private_key" {
-#   count    = var.public_ssh_key == "" ? 1 : 0
-#   content  = tls_private_key.ssh.private_key_pem
-#   filename = "private_ssh_key"
-# }
 
 #---------------------------------------------------------
 # Kubernetes Creation or selection
