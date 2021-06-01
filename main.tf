@@ -96,7 +96,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
 
     dynamic "ingress_application_gateway" {
-      for_each = (var.create_ingress && var.gateway_id) ? [true] : []
+      for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
       content {
         enabled    = var.create_ingress
         gateway_id = var.gateway_id
