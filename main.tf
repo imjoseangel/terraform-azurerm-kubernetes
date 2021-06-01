@@ -23,6 +23,13 @@ resource "azurerm_resource_group" "rg" {
   tags     = merge({ "ResourceName" = format("%s", var.resource_group_name) }, var.tags, )
 }
 
+resource "azurerm_management_lock" "rg-lock" {
+  name       = "resource-group-tflock"
+  scope      = azurerm_resource_group.rg.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}
+
 #---------------------------------------------------------
 # SSH Key Creation or selection
 #---------------------------------------------------------
@@ -111,6 +118,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   network_profile {
+    #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
     load_balancer_sku = length(var.availability_zones) == 0 ? var.load_balancer_sku : "Standard"
     network_plugin    = var.network_plugin
     network_policy    = var.network_policy
