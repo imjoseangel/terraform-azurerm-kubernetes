@@ -137,7 +137,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 resource "azurerm_log_analytics_workspace" "main" {
   count               = var.oms_agent_enabled ? 1 : 0
   name                = var.log_analytics_workspace_name == null ? "${var.prefix}-workspace" : var.log_analytics_workspace_name
-  location            = var.location
+  location            = local.location
   resource_group_name = local.resource_group_name
   sku                 = var.log_analytics_workspace_sku
   retention_in_days   = var.log_retention_in_days
@@ -148,7 +148,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 resource "azurerm_log_analytics_solution" "main" {
   count                 = var.oms_agent_enabled ? 1 : 0
   solution_name         = "ContainerInsights"
-  location              = var.location
+  location              = local.location
   resource_group_name   = local.resource_group_name
   workspace_resource_id = azurerm_log_analytics_workspace.main[0].id
   workspace_name        = azurerm_log_analytics_workspace.main[0].name
