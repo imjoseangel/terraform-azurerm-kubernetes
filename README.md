@@ -43,7 +43,8 @@ module "aks" {
   agents_availability_zones = ["1", "2"]
   private_cluster_enabled   = false # default value
   vnet_subnet_id            = azurerm_subnet.akssubnet.id
-  create_ingress            = false
+  create_ingress            = true # defaults to false
+  gateway_id                = azurerm_application_gateway.appgateway.id # id of the application gw for ingress
   enable_auto_scaling       = true
   max_default_node_count    = 3
   min_default_node_count    = 1
