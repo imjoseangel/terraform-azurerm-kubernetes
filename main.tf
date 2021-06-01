@@ -96,8 +96,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
 
     dynamic "ingress_application_gateway" {
-      #ts:skip=accurics.azure.NS.147 Enabling dynamically
-      for_each = (var.create_ingress == true && var.gateway_id != "") ? [true] : []
+      for_each = (var.create_ingress && var.gateway_id) ? [true] : []
       content {
         enabled    = var.create_ingress
         gateway_id = var.gateway_id
