@@ -49,7 +49,7 @@ module "aks" {
   min_default_node_count    = 1
 }
 
-resource "azurerm_role_assignment" "resource_group" {
+resource "azurerm_role_assignment" "aks_resource_group" {
   scope                = data.azurerm_resource_group.aksvnetrsg.id
   role_definition_name = "Network Contributor"
   principal_id         = module.aks.system_assigned_identity[0].principal_id
