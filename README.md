@@ -12,7 +12,7 @@ This Terraform module deploys a Kubernetes cluster on Azure using AKS (Azure Kub
 * Kubernetes Version is set to Current.
 * Role Based Access Control is always enabled.
 
-## Usage in Terraform 0.15
+## Usage in Terraform 1.0
 
 ```terraform
 data "azurerm_resource_group" "aksvnetrsg" {
