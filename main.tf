@@ -50,6 +50,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
     content {
       name                = var.node_pool_name
+      node_resource_group = var.node_resource_group
       node_count          = var.node_count
       vm_size             = var.default_vm_size
       os_disk_size_gb     = var.os_disk_size_gb
@@ -66,6 +67,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     for_each = var.enable_auto_scaling == true ? ["default_node_pool_auto_scaled"] : []
     content {
       name                = var.node_pool_name
+      node_resource_group = var.node_resource_group
       vm_size             = var.default_vm_size
       os_disk_size_gb     = var.os_disk_size_gb
       vnet_subnet_id      = var.vnet_subnet_id
