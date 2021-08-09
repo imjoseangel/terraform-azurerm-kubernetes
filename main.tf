@@ -147,7 +147,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   vnet_subnet_id        = var.vnet_subnet_id
   availability_zones    = var.availability_zones
   os_type               = "Windows"
-  type                  = "VirtualMachineScaleSets"
 }
 
 resource "azurerm_log_analytics_workspace" "main" {
