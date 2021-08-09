@@ -139,12 +139,17 @@ resource "azurerm_kubernetes_cluster" "main" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows" {
-  count                 = var.windows_node_pool_enabled ? 1 : 0
+  count                 = var.windows_node_pool_enabled && var.enable_windows_auto_scaling ? 1 : 0
   name                  = substr(var.windows_pool_name, 0, 6)
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
   vm_size               = var.windows_vm_size
+  os_disk_size_gb       = var.windows_os_disk_size_gb
   node_count            = var.windows_node_count
   vnet_subnet_id        = var.vnet_subnet_id
+  enable_auto_scaling   = var.enable_windows_auto_scaling
+  max_count             = var.max_default_windows_node_count
+  min_count             = var.min_default_windows_node_count
+  max_pods              = var.max_default_windows_pod_count
   availability_zones    = var.availability_zones
   os_type               = "Windows"
 }

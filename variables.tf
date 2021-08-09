@@ -209,6 +209,36 @@ variable "windows_node_count" {
   default     = null
 }
 
+variable "windows_os_disk_size_gb" {
+  description = "Disk size of nodes in GBs."
+  type        = number
+  default     = 128
+}
+
+variable "enable_windows_auto_scaling" {
+  description = "Enable Windows node pool autoscaling"
+  type        = bool
+  default     = false
+}
+
+variable "max_default_windows_node_count" {
+  description = "(Required) The maximum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
+  type        = number
+  default     = null
+}
+
+variable "min_default_windows_node_count" {
+  description = "(Required) The minimum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
+  type        = number
+  default     = null
+}
+
+variable "max_default_windows_pod_count" {
+  description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
+  type        = number
+  default     = 10
+}
+
 variable "tags" {
   description = "Tags to apply to all resources created."
   type        = map(string)
