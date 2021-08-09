@@ -147,8 +147,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   os_disk_size_gb       = var.windows_os_disk_size_gb
   vnet_subnet_id        = var.vnet_subnet_id
   enable_auto_scaling   = var.enable_windows_auto_scaling
-  max_count             = var.max_default_windows_node_count
-  min_count             = var.min_default_windows_node_count
+  max_count             = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
+  min_count             = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
   availability_zones    = var.availability_zones
   max_pods              = var.max_default_windows_pod_count
   os_type               = "Windows"
