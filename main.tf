@@ -139,7 +139,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows" {
-  count                 = var.windows_node_pool_enabled
+  count                 = var.windows_node_pool_enabled ? 1 : 0
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
   name                  = substr(var.windows_pool_name, 0, 6)
   node_count            = var.windows_node_count
