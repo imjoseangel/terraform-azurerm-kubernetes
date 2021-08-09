@@ -142,7 +142,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   count                 = var.windows_node_pool_enabled ? 1 : 0
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
   name                  = substr(var.windows_pool_name, 0, 6)
-  node_count            = var.windows_node_count
+  node_count            = var.enable_windows_auto_scaling == false ? var.windows_node_count : null
   vm_size               = var.windows_vm_size
   os_disk_size_gb       = var.windows_os_disk_size_gb
   vnet_subnet_id        = var.vnet_subnet_id
