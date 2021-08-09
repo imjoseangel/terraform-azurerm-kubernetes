@@ -112,7 +112,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   network_profile {
     #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
     load_balancer_sku = length(var.availability_zones) == 0 ? var.load_balancer_sku : "Standard"
-    network_plugin    = var.network_plugin
+    network_plugin    = var.windows_node_pool_enabled ? "azure" : var.network_plugin
     network_policy    = var.network_policy
   }
 
@@ -136,6 +136,18 @@ resource "azurerm_kubernetes_cluster" "main" {
     ]
   }
 
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "windows" {
+  count                 = var.windows_node_pool_enabled ? 1 : 0
+  name                  = substr(var.windows_pool_name, 0, 6)
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  vm_size               = var.windows_vm_size
+  node_count            = var.windows_node_count
+  vnet_subnet_id        = var.vnet_subnet_id
+  availability_zones    = var.availability_zones
+  os_type               = "Windows"
+  type                  = "VirtualMachineScaleSets"
 }
 
 resource "azurerm_log_analytics_workspace" "main" {
