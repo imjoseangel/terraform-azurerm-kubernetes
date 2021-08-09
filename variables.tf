@@ -185,6 +185,30 @@ variable "rbac_aad_admin_group_object_ids" {
   default     = null
 }
 
+variable "windows_node_pool_enabled" {
+  description = "Enable Windows node pool"
+  type        = bool
+  default     = false
+}
+
+variable "windows_pool_name" {
+  description = "The name of the Windows node Pool (A Windows Node Pool cannot have a name longer than 6 characters.)"
+  type        = string
+  default     = "wpool"
+}
+
+variable "windows_vm_size" {
+  description = "The size of the Windows Virtual Machine, such as Standard_D2_v4"
+  type        = string
+  default     = "Standard_D2_v4"
+}
+
+variable "windows_node_count" {
+  description = "The number of Nodes that should exist in the Pool. Please set `node_count` `null` while `enable_auto_scaling` is `true` to avoid possible `node_count` changes."
+  type        = number
+  default     = null
+}
+
 variable "tags" {
   description = "Tags to apply to all resources created."
   type        = map(string)
