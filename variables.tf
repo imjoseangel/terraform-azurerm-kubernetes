@@ -24,9 +24,9 @@ variable "prefix" {
 }
 
 variable "default_vm_size" {
-  description = "The size of the Virtual Machine, such as Standard_D2_v4"
+  description = "The size of the Virtual Machine, such as Standard_D2s_V4"
   type        = string
-  default     = "Standard_B2ms"
+  default     = "Standard_D2s_V4"
 }
 
 variable "availability_zones" {
@@ -198,9 +198,9 @@ variable "windows_pool_name" {
 }
 
 variable "windows_vm_size" {
-  description = "The size of the Windows Virtual Machine, such as Standard_D2_v4"
+  description = "The size of the Windows Virtual Machine, such as Standard_D2s_V4"
   type        = string
-  default     = "Standard_D2_v4"
+  default     = "Standard_D2s_V4"
 }
 
 variable "windows_node_count" {
