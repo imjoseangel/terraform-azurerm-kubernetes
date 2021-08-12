@@ -67,6 +67,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       max_count           = null
       min_count           = null
       availability_zones  = var.availability_zones
+      max_pods            = var.max_default_pod_count
       type                = "VirtualMachineScaleSets"
     }
   }
@@ -82,6 +83,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       max_count           = var.max_default_node_count
       min_count           = var.min_default_node_count
       availability_zones  = var.availability_zones
+      max_pods            = var.max_default_pod_count
       type                = "VirtualMachineScaleSets"
     }
   }

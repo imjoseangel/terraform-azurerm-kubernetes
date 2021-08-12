@@ -239,6 +239,12 @@ variable "min_default_windows_node_count" {
   default     = null
 }
 
+variable "max_default_pod_count" {
+  description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
+  type        = number
+  default     = 30
+}
+
 variable "max_default_windows_pod_count" {
   description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
   type        = number
