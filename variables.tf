@@ -188,7 +188,7 @@ variable "azure_rbac_enabled" {
 variable "rbac_aad_admin_group" {
   description = "List of groups with admin access."
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "windows_node_pool_enabled" {
