@@ -179,6 +179,12 @@ variable "rbac_aad_managed" {
   default     = false
 }
 
+variable "azure_rbac_enabled" {
+  description = "(Optional) Is Role Based Access Control based on Azure AD enabled?"
+  type        = bool
+  default     = false
+}
+
 variable "rbac_aad_admin_group_object_ids" {
   description = "Object ID of groups with admin access."
   type        = list(string)
