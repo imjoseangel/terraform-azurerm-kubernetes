@@ -99,7 +99,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   addon_profile {
     oms_agent {
       enabled                    = var.oms_agent_enabled
-      log_analytics_workspace_id = var.oms_agent_enabled ? azurerm_log_analytics_workspace.main[0].id : null
+      log_analytics_workspace_id = var.oms_agent_enabled ? data.azurerm_log_analytics_workspace.main.workspace_id : null
     }
 
     http_application_routing {
@@ -166,28 +166,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   os_type               = "Windows"
 }
 
-resource "azurerm_log_analytics_workspace" "main" {
+
+data "azurerm_log_analytics_workspace" "main" {
   count               = var.oms_agent_enabled ? 1 : 0
-  name                = var.log_analytics_workspace_name == null ? "${var.prefix}-workspace" : var.log_analytics_workspace_name
-  location            = local.location
-  resource_group_name = local.resource_group_name
-  sku                 = var.log_analytics_workspace_sku
-  retention_in_days   = var.log_retention_in_days
-  tags                = var.tags
-}
-
-resource "azurerm_log_analytics_solution" "main" {
-  count                 = var.oms_agent_enabled ? 1 : 0
-  solution_name         = "ContainerInsights"
-  location              = local.location
-  resource_group_name   = local.resource_group_name
-  workspace_resource_id = azurerm_log_analytics_workspace.main[0].id
-  workspace_name        = azurerm_log_analytics_workspace.main[0].name
-
-  plan {
-    publisher = "Microsoft"
-    product   = "OMSGallery/ContainerInsights"
-  }
-
-  tags = var.tags
+  name                = var.log_analytics_workspace_name
+  resource_group_name = var.log_analytics_resource_group
 }
