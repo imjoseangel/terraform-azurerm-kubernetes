@@ -113,22 +113,16 @@ variable "oms_agent_enabled" {
   default     = true
 }
 
-variable "log_analytics_workspace_id" {
-  description = "(Optional) The ID of the Log Analytics Workspace which the OMS Agent should send data to. Must be present if enabled is true."
-  type        = string
-  default     = null
-}
-
 variable "log_analytics_workspace_name" {
   description = "(Optional) The name of the Analytics workspace"
   type        = string
   default     = null
 }
 
-variable "log_analytics_workspace_sku" {
-  description = "The SKU (pricing level) of the Log Analytics workspace. For new subscriptions the SKU should be set to PerGB2018"
+variable "log_analytics_resource_group" {
+  description = "The resource group name of the Analytics workspace"
   type        = string
-  default     = "PerGB2018"
+  default     = null
 }
 
 variable "log_retention_in_days" {
