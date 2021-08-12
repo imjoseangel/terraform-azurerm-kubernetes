@@ -45,7 +45,6 @@ resource "azurerm_kubernetes_cluster" "main" {
   api_server_authorized_ip_ranges = var.authorized_ips
   sku_tier                        = var.sku_tier
   private_cluster_enabled         = var.private_cluster_enabled
-  private_dns_zone_id             = "System"
 
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
