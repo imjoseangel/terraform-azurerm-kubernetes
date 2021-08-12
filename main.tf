@@ -34,6 +34,15 @@ resource "tls_private_key" "ssh" {
 }
 
 #---------------------------------------------------------
+# Read AD Group IDs
+#---------------------------------------------------------
+
+data "azuread_group" "main" {
+  count        = length(var.rbac_aad_admin_group)
+  display_name = var.rbac_aad_admin_group[count.index]
+}
+
+#---------------------------------------------------------
 # Kubernetes Creation or selection
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
@@ -123,7 +132,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
       content {
         managed                = true
-        admin_group_object_ids = var.rbac_aad_admin_group_object_ids
+        admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
         azure_rbac_enabled     = var.azure_rbac_enabled
       }
     }

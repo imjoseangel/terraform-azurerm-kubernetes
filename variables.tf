@@ -185,8 +185,8 @@ variable "azure_rbac_enabled" {
   default     = false
 }
 
-variable "rbac_aad_admin_group_object_ids" {
-  description = "Object ID of groups with admin access."
+variable "rbac_aad_admin_group" {
+  description = "List of groups with admin access."
   type        = list(string)
   default     = null
 }
