@@ -107,6 +107,12 @@ variable "enable_auto_scaling" {
   default     = false
 }
 
+variable "system_only" {
+  description = "(Optional) Enabling this option will taint default node pool with CriticalAddonsOnly=true:NoSchedule taint."
+  type        = bool
+  default     = false
+}
+
 variable "oms_agent_enabled" {
   description = "Deploy the OMS Agent to this Kubernetes Cluster"
   type        = bool
