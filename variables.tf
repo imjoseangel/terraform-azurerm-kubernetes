@@ -251,6 +251,61 @@ variable "max_default_windows_pod_count" {
   default     = 10
 }
 
+
+variable "system_node_pool_enabled" {
+  description = "Enable System node pool"
+  type        = bool
+  default     = false
+}
+
+variable "system_pool_name" {
+  description = "The name of the System node Pool (A System Node Pool cannot have a name longer than 6 characters.)"
+  type        = string
+  default     = "wpool"
+}
+
+variable "system_vm_size" {
+  description = "The size of the System Virtual Machine, such as Standard_D2s_V4"
+  type        = string
+  default     = "Standard_D2s_V4"
+}
+
+variable "system_node_count" {
+  description = "The number of Nodes that should exist in the Pool. Please set `node_count` `null` while `enable_auto_scaling` is `true` to avoid possible `node_count` changes."
+  type        = number
+  default     = null
+}
+
+variable "system_os_disk_size_gb" {
+  description = "Disk size of nodes in GBs."
+  type        = number
+  default     = 128
+}
+
+variable "enable_system_auto_scaling" {
+  description = "Enable System node pool autoscaling"
+  type        = bool
+  default     = false
+}
+
+variable "max_default_system_node_count" {
+  description = "(Required) The maximum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
+  type        = number
+  default     = null
+}
+
+variable "min_default_system_node_count" {
+  description = "(Required) The minimum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
+  type        = number
+  default     = null
+}
+
+variable "max_default_system_pod_count" {
+  description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
+  type        = number
+  default     = 30
+}
+
 variable "tags" {
   description = "Tags to apply to all resources created."
   type        = map(string)

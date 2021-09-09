@@ -168,6 +168,23 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   os_type               = "Windows"
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "system" {
+  count                 = var.system_node_pool_enabled ? 1 : 0
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  name                  = "systempool"
+  node_count            = var.enable_system_auto_scaling == false ? var.system_node_count : null
+  vm_size               = var.system_vm_size
+  os_disk_size_gb       = var.system_os_disk_size_gb
+  vnet_subnet_id        = var.vnet_subnet_id
+  enable_auto_scaling   = var.enable_system_auto_scaling
+  max_count             = var.enable_system_auto_scaling ? var.max_default_system_node_count : null
+  min_count             = var.enable_system_auto_scaling ? var.min_default_system_node_count : null
+  availability_zones    = var.availability_zones
+  max_pods              = var.max_default_system_pod_count
+  node_taints           = ["CriticalAddonsOnly=true:NoSchedule"]
+  mode                  = "System"
+}
+
 
 data "azurerm_log_analytics_workspace" "main" {
   count               = var.oms_agent_enabled ? 1 : 0
