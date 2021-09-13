@@ -165,6 +165,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   min_count             = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
   availability_zones    = var.availability_zones
   max_pods              = var.max_default_windows_pod_count
+  node_taints           = ["os=windows:NoSchedule"]
   os_type               = "Windows"
 }
 
