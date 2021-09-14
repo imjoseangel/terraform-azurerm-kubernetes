@@ -164,7 +164,13 @@ variable "load_balancer_sku" {
 variable "os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 128
+  default     = 64
+}
+
+variable "os_disk_type" {
+  description = "The type of disk which should be used for the Operating System."
+  type        = string
+  default     = "Ephemeral"
 }
 
 variable "enable_role_based_access_control" {
@@ -218,7 +224,13 @@ variable "windows_node_count" {
 variable "windows_os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 128
+  default     = 64
+}
+
+variable "windows_os_disk_type" {
+  description = "The type of disk which should be used for the Operating System."
+  type        = string
+  default     = "Ephemeral"
 }
 
 variable "enable_windows_auto_scaling" {
@@ -279,7 +291,14 @@ variable "system_node_count" {
 variable "system_os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 128
+  default     = 64
+}
+
+
+variable "system_os_disk_type" {
+  description = "The type of disk which should be used for the Operating System."
+  type        = string
+  default     = "Ephemeral"
 }
 
 variable "enable_system_auto_scaling" {

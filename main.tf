@@ -62,6 +62,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       node_count                   = var.node_count
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
+      os_disk_type                 = var.os_disk_type
       vnet_subnet_id               = var.vnet_subnet_id
       enable_auto_scaling          = var.enable_auto_scaling
       max_count                    = null
@@ -79,6 +80,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       name                         = var.node_pool_name
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
+      os_disk_type                 = var.os_disk_type
       vnet_subnet_id               = var.vnet_subnet_id
       enable_auto_scaling          = var.enable_auto_scaling
       max_count                    = var.max_default_node_count
@@ -159,6 +161,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   node_count            = var.enable_windows_auto_scaling == false ? var.windows_node_count : null
   vm_size               = var.windows_vm_size
   os_disk_size_gb       = var.windows_os_disk_size_gb
+  os_disk_type          = var.windows_os_disk_type
   vnet_subnet_id        = var.vnet_subnet_id
   enable_auto_scaling   = var.enable_windows_auto_scaling
   max_count             = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
@@ -176,6 +179,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "system" {
   node_count            = var.enable_system_auto_scaling == false ? var.system_node_count : null
   vm_size               = var.system_vm_size
   os_disk_size_gb       = var.system_os_disk_size_gb
+  os_disk_type          = var.system_os_disk_type
   vnet_subnet_id        = var.vnet_subnet_id
   enable_auto_scaling   = var.enable_system_auto_scaling
   max_count             = var.enable_system_auto_scaling ? var.max_default_system_node_count : null
