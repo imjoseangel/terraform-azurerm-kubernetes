@@ -26,7 +26,7 @@ variable "prefix" {
 variable "default_vm_size" {
   description = "The size of the Virtual Machine, such as Standard_D2s_V4"
   type        = string
-  default     = "Standard_D2s_V4"
+  default     = "Standard_D2ds_v4"
 }
 
 variable "availability_zones" {
@@ -170,7 +170,7 @@ variable "os_disk_size_gb" {
 variable "os_disk_type" {
   description = "The type of disk which should be used for the Operating System."
   type        = string
-  default     = "Ephemeral"
+  default     = "Managed"
 }
 
 variable "enable_role_based_access_control" {
@@ -212,7 +212,7 @@ variable "windows_pool_name" {
 variable "windows_vm_size" {
   description = "The size of the Windows Virtual Machine, such as Standard_D2s_V4"
   type        = string
-  default     = "Standard_D2s_V4"
+  default     = "Standard_D2ds_v4"
 }
 
 variable "windows_node_count" {
@@ -279,7 +279,7 @@ variable "system_pool_name" {
 variable "system_vm_size" {
   description = "The size of the System Virtual Machine, such as Standard_D2s_V4"
   type        = string
-  default     = "Standard_D2s_V4"
+  default     = "Standard_D2ds_v4"
 }
 
 variable "system_node_count" {
