@@ -164,7 +164,7 @@ variable "load_balancer_sku" {
 variable "os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 52
+  default     = 50
 }
 
 variable "os_disk_type" {
@@ -224,7 +224,7 @@ variable "windows_node_count" {
 variable "windows_os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 52
+  default     = 50
 }
 
 variable "windows_os_disk_type" {
@@ -291,7 +291,7 @@ variable "system_node_count" {
 variable "system_os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
-  default     = 52
+  default     = 50
 }
 
 
