@@ -170,7 +170,7 @@ variable "os_disk_size_gb" {
 variable "os_disk_type" {
   description = "The type of disk which should be used for the Operating System."
   type        = string
-  default     = "Managed"
+  default     = "Ephemeral"
 }
 
 variable "enable_role_based_access_control" {
