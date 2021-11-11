@@ -1,6 +1,6 @@
 # terraform-azurerm-kubernetes
 
-[![Terraform](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/visma-raet/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
+[![Terraform](https://github.com/imjoseangel/terraform-azurerm-kubernetes/actions/workflows/terraform.yml/badge.svg)](https://github.com/imjoseangel/terraform-azurerm-kubernetes/actions/workflows/terraform.yml)
 
 ## Deploys a Kubernetes cluster on AKS with application gateway support. Monitoring support can be added through Azure Log Analytics
 
@@ -32,7 +32,7 @@ resource "azurerm_subnet" "akssubnet" {
 }
 
 module "aks" {
-  source                    = "github.com/visma-raet/terraform-azurerm-kubernetes"
+  source                    = "github.com/imjoseangel/terraform-azurerm-kubernetes"
   name                      = "aksname"
   resource_group_name       = "rsg-aks"
   location                  = "westeurope"
@@ -71,7 +71,7 @@ provider "kubernetes" {
 
 ## Authors
 
-Originally created by [Visma-raet](http://github.com/visma-raet)
+Originally created by [imjoseangel](http://github.com/imjoseangel)
 
 ## License
 
