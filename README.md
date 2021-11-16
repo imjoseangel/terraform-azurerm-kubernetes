@@ -40,6 +40,9 @@ module "aks" {
   sku_tier                             = "Free"
   create_resource_group                = true
   oms_agent_enabled                    = false
+  enable_role_based_access_control     = true
+  rbac_aad_managed                     = true
+  rbac_aad_admin_group                 = ["group1", "group2"]
   agents_availability_zones            = ["1", "2"]
   private_cluster_enabled              = false # default value
   vnet_subnet_id                       = azurerm_subnet.akssubnet.id
@@ -48,8 +51,14 @@ module "aks" {
   enable_auto_scaling                  = true
   max_default_node_count               = 3
   min_default_node_count               = 1
-  windows_node_pool_enabled            = false
   azurerm_kubernetes_cluster_node_pool = true
+  windows_node_pool_enabled            = true
+  enable_windows_auto_scaling          = true
+  max_default_windows_node_count       = 5
+  min_default_windows_node_count       = 1
+  enable_system_auto_scaling           = false
+  system_node_count                    = 1
+  system_node_pool_enabled             = true
 }
 
 resource "azurerm_role_assignment" "aks_resource_group" {
