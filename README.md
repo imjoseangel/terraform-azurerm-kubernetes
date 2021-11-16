@@ -32,22 +32,24 @@ resource "azurerm_subnet" "akssubnet" {
 }
 
 module "aks" {
-  source                    = "github.com/imjoseangel/terraform-azurerm-kubernetes"
-  name                      = "aksname"
-  resource_group_name       = "rsg-aks"
-  location                  = "westeurope"
-  prefix                    = "aksdns"
-  sku_tier                  = "Free"
-  create_resource_group     = true
-  oms_agent_enabled         = false
-  agents_availability_zones = ["1", "2"]
-  private_cluster_enabled   = false # default value
-  vnet_subnet_id            = azurerm_subnet.akssubnet.id
-  create_ingress            = true # defaults to false
-  gateway_id                = azurerm_application_gateway.appgateway.id # id of the application gw for ingress
-  enable_auto_scaling       = true
-  max_default_node_count    = 3
-  min_default_node_count    = 1
+  source                               = "github.com/imjoseangel/terraform-azurerm-kubernetes"
+  name                                 = "aksname"
+  resource_group_name                  = "rsg-aks"
+  location                             = "westeurope"
+  prefix                               = "aksdns"
+  sku_tier                             = "Free"
+  create_resource_group                = true
+  oms_agent_enabled                    = false
+  agents_availability_zones            = ["1", "2"]
+  private_cluster_enabled              = false # default value
+  vnet_subnet_id                       = azurerm_subnet.akssubnet.id
+  create_ingress                       = true # defaults to false
+  gateway_id                           = azurerm_application_gateway.appgateway.id # id of the application gw for ingress
+  enable_auto_scaling                  = true
+  max_default_node_count               = 3
+  min_default_node_count               = 1
+  windows_node_pool_enabled            = false
+  azurerm_kubernetes_cluster_node_pool = true
 }
 
 resource "azurerm_role_assignment" "aks_resource_group" {
