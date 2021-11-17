@@ -110,7 +110,7 @@ variable "enable_auto_scaling" {
 variable "system_only" {
   description = "(Optional) Enabling this option will taint default node pool with CriticalAddonsOnly=true:NoSchedule taint."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "oms_agent_enabled" {
@@ -206,7 +206,7 @@ variable "windows_node_pool_enabled" {
 variable "windows_pool_name" {
   description = "The name of the Windows node Pool (A Windows Node Pool cannot have a name longer than 6 characters.)"
   type        = string
-  default     = "wpool"
+  default     = "winpl"
 }
 
 variable "windows_vm_size" {
@@ -264,62 +264,62 @@ variable "max_default_windows_pod_count" {
 }
 
 
-variable "system_node_pool_enabled" {
-  description = "Enable System node pool"
+variable "linux_node_pool_enabled" {
+  description = "Enable linux node pool"
   type        = bool
   default     = false
 }
 
-variable "system_pool_name" {
-  description = "The name of the System node Pool (A System Node Pool cannot have a name longer than 6 characters.)"
+variable "linux_pool_name" {
+  description = "The name of the linux node Pool (A linux Node Pool cannot have a name longer than 6 characters.)"
   type        = string
-  default     = "wpool"
+  default     = "linpl"
 }
 
-variable "system_vm_size" {
-  description = "The size of the System Virtual Machine, such as Standard_D2s_V4"
+variable "linux_vm_size" {
+  description = "The size of the linux Virtual Machine, such as Standard_D2s_V4"
   type        = string
   default     = "Standard_D2ds_v4"
 }
 
-variable "system_node_count" {
+variable "linux_node_count" {
   description = "The number of Nodes that should exist in the Pool. Please set `node_count` `null` while `enable_auto_scaling` is `true` to avoid possible `node_count` changes."
   type        = number
   default     = null
 }
 
-variable "system_os_disk_size_gb" {
+variable "linux_os_disk_size_gb" {
   description = "Disk size of nodes in GBs."
   type        = number
   default     = 50
 }
 
 
-variable "system_os_disk_type" {
-  description = "The type of disk which should be used for the Operating System."
+variable "linux_os_disk_type" {
+  description = "The type of disk which should be used for the Operating linux."
   type        = string
   default     = "Ephemeral"
 }
 
-variable "enable_system_auto_scaling" {
-  description = "Enable System node pool autoscaling"
+variable "enable_linux_auto_scaling" {
+  description = "Enable linux node pool autoscaling"
   type        = bool
   default     = false
 }
 
-variable "max_default_system_node_count" {
+variable "max_default_linux_node_count" {
   description = "(Required) The maximum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
   type        = number
   default     = null
 }
 
-variable "min_default_system_node_count" {
+variable "min_default_linux_node_count" {
   description = "(Required) The minimum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000."
   type        = number
   default     = null
 }
 
-variable "max_default_system_pod_count" {
+variable "max_default_linux_pod_count" {
   description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
   type        = number
   default     = 30
