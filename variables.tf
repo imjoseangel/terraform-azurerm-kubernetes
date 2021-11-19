@@ -155,6 +155,12 @@ variable "vnet_subnet_id" {
   default     = null
 }
 
+variable "linux_vnet_subnet_id" {
+  description = "(Optional) The ID of a Subnet where the Kubernetes Linux Node Pool should exist. Changing this forces a new resource to be created."
+  type        = string
+  default     = null
+}
+
 variable "load_balancer_sku" {
   description = "(Optional) Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are Basic and Standard. Defaults to Standard."
   type        = string
