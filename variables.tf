@@ -74,7 +74,7 @@ variable "node_resource_group" {
 variable "node_pool_name" {
   description = "The default Azure AKS nodepool name."
   type        = string
-  default     = "default"
+  default     = "defaultpool"
 }
 
 variable "network_plugin" {
@@ -206,7 +206,7 @@ variable "windows_node_pool_enabled" {
 variable "windows_pool_name" {
   description = "The name of the Windows node Pool (A Windows Node Pool cannot have a name longer than 6 characters.)"
   type        = string
-  default     = "winpl"
+  default     = "wnpool"
 }
 
 variable "windows_vm_size" {
@@ -273,7 +273,7 @@ variable "linux_node_pool_enabled" {
 variable "linux_pool_name" {
   description = "The name of the linux node Pool (A linux Node Pool cannot have a name longer than 6 characters.)"
   type        = string
-  default     = "linpl"
+  default     = "linuxpool"
 }
 
 variable "linux_vm_size" {
