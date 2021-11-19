@@ -180,7 +180,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux" {
   vm_size               = var.linux_vm_size
   os_disk_size_gb       = var.linux_os_disk_size_gb
   os_disk_type          = var.linux_os_disk_type
-  vnet_subnet_id        = var.vnet_subnet_id
+  vnet_subnet_id        = var.linux_vnet_subnet_id
   enable_auto_scaling   = var.enable_linux_auto_scaling
   max_count             = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
   min_count             = var.enable_linux_auto_scaling ? var.min_default_linux_node_count : null
