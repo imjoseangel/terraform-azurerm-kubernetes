@@ -43,7 +43,7 @@ module "aks" {
   enable_role_based_access_control     = true
   rbac_aad_managed                     = true
   rbac_aad_admin_group                 = ["group1", "group2"]
-  agents_availability_zones            = ["1", "2"]
+  availability_zones                   = ["1", "2"]
   private_cluster_enabled              = false # default value
   vnet_subnet_id                       = azurerm_subnet.akssubnet.id
   create_ingress                       = true # defaults to false
