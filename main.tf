@@ -46,7 +46,7 @@ data "azuread_group" "main" {
 # Kubernetes Creation or selection
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
-  name                            = lower(var.name)
+  name                            = substr(lower(var.name), 0, 12)
   location                        = local.location
   resource_group_name             = local.resource_group_name
   node_resource_group             = var.node_resource_group
@@ -157,7 +157,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   count                 = var.windows_node_pool_enabled ? 1 : 0
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
-  name                  = substr(var.windows_pool_name, 3, 6)
+  name                  = substr(lower(var.windows_pool_name), 0, 6)
   node_count            = var.enable_windows_auto_scaling == false ? var.windows_node_count : null
   vm_size               = var.windows_vm_size
   os_disk_size_gb       = var.windows_os_disk_size_gb
@@ -175,7 +175,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
 resource "azurerm_kubernetes_cluster_node_pool" "linux" {
   count                 = var.linux_node_pool_enabled ? 1 : 0
   kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
-  name                  = substr(var.linux_pool_name, 3, 12)
+  name                  = substr(lower(var.linux_pool_name), 0, 12)
   node_count            = var.enable_linux_auto_scaling == false ? var.linux_node_count : null
   vm_size               = var.linux_vm_size
   os_disk_size_gb       = var.linux_os_disk_size_gb
