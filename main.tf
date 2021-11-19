@@ -46,7 +46,7 @@ data "azuread_group" "main" {
 # Kubernetes Creation or selection
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
-  name                            = substr(lower(var.name), 0, 12)
+  name                            = lower(var.name)
   location                        = local.location
   resource_group_name             = local.resource_group_name
   node_resource_group             = var.node_resource_group
@@ -58,7 +58,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
     content {
-      name                         = var.node_pool_name
+      name                         = substr(lower(var.node_pool_name), 0, 12)
       node_count                   = var.node_count
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
@@ -77,7 +77,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? ["default_node_pool_auto_scaled"] : []
     content {
-      name                         = var.node_pool_name
+      name                         = substr(lower(var.node_pool_name), 0, 12)
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
       os_disk_type                 = var.os_disk_type
