@@ -55,9 +55,10 @@ module "aks" {
   enable_windows_auto_scaling          = true
   max_default_windows_node_count       = 5
   min_default_windows_node_count       = 1
-  system_node_pool_enabled             = true
-  enable_system_auto_scaling           = false
-  system_node_count                    = 1
+  linux_node_pool_enabled              = true
+  enable_linux_auto_scaling            = true
+  max_default_node_count               = 3
+  min_default_node_count               = 1
 }
 
 resource "azurerm_role_assignment" "aks_resource_group" {
