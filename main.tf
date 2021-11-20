@@ -110,6 +110,10 @@ resource "azurerm_kubernetes_cluster" "main" {
       enabled = false
     }
 
+    kube_dashboard {
+      enabled = var.enable_kube_dashboard
+    }
+
     dynamic "ingress_application_gateway" {
       for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
       content {
@@ -117,7 +121,6 @@ resource "azurerm_kubernetes_cluster" "main" {
         gateway_id = var.gateway_id
       }
     }
-
   }
 
   identity {

@@ -47,6 +47,12 @@ variable "private_cluster_enabled" {
   default     = false
 }
 
+variable "enable_kube_dashboard" {
+  description = "Enable Kubernetes Dashboard."
+  type        = bool
+  default     = false
+}
+
 variable "authorized_ips" {
   description = "A list of IP addresses to allow to connect to the cluster."
   type        = list(string)
