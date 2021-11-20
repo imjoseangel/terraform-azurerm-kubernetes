@@ -336,3 +336,15 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "identity_type" {
+  description = "Type type of identity used for the managed cluster. Possible values are 'SystemAssigned' and 'UserAssigned'. If 'UserAssigned' is set, a 'user_assigned_identity_id' must be set as well."
+  type        = string
+  default     = "SystemAssigned"
+}
+
+variable "user_assigned_identity_id" {
+  description = "(Optional) the ID of a user assigned identity"
+  type        = string
+  default     = null
+}
