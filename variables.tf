@@ -354,3 +354,9 @@ variable "user_assigned_identity_id" {
   type        = string
   default     = null
 }
+
+variable "outbound_type" {
+  description = "(Optional) The outbound (egress) routing method which should be used for this Kubernetes Cluster. Possible values are loadBalancer, userDefinedRouting, managedNATGateway and userAssignedNATGateway. Defaults to loadBalancer."
+  type        = string
+  default     = "loadBalancer"
+}
