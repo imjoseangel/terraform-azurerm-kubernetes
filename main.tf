@@ -158,7 +158,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   lifecycle {
     ignore_changes = [
-      default_node_pool[0].node_count, tags, linux_profile.0.ssh_key
+      default_node_pool[0].node_count, tags, linux_profile.0.ssh_key, role_based_access_control.0.azure_active_directory.0.admin_group_object_ids
     ]
   }
 
