@@ -47,6 +47,12 @@ variable "private_cluster_enabled" {
   default     = false
 }
 
+variable "private_cluster_public_fqdn_enabled" {
+  description = "(Optional) Specifies whether a Public FQDN for this Private Cluster should be added."
+  type        = bool
+  default     = false
+}
+
 variable "enable_kube_dashboard" {
   description = "Enable Kubernetes Dashboard."
   type        = bool

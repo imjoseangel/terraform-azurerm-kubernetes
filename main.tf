@@ -46,14 +46,15 @@ data "azuread_group" "main" {
 # Kubernetes Creation or selection
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
-  name                            = lower(var.name)
-  location                        = local.location
-  resource_group_name             = local.resource_group_name
-  node_resource_group             = var.node_resource_group
-  dns_prefix                      = var.prefix
-  api_server_authorized_ip_ranges = var.authorized_ips
-  sku_tier                        = var.sku_tier
-  private_cluster_enabled         = var.private_cluster_enabled
+  name                                = lower(var.name)
+  location                            = local.location
+  resource_group_name                 = local.resource_group_name
+  node_resource_group                 = var.node_resource_group
+  dns_prefix                          = var.prefix
+  api_server_authorized_ip_ranges     = var.authorized_ips
+  sku_tier                            = var.sku_tier
+  private_cluster_enabled             = var.private_cluster_enabled
+  private_cluster_public_fqdn_enabled = var.private_cluster_public_fqdn_enabled
 
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
