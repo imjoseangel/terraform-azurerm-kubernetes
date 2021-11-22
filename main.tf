@@ -115,6 +115,10 @@ resource "azurerm_kubernetes_cluster" "main" {
       enabled = var.enable_kube_dashboard
     }
 
+    azure_policy {
+      enabled = var.enable_azure_policy
+    }
+
     dynamic "ingress_application_gateway" {
       for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
       content {
@@ -148,10 +152,6 @@ resource "azurerm_kubernetes_cluster" "main" {
         azure_rbac_enabled     = var.azure_rbac_enabled
       }
     }
-  }
-
-  azure_policy {
-    enabled = var.enable_azure_policy
   }
 
   tags = merge({ "ResourceName" = lower(var.name) }, var.tags, )
