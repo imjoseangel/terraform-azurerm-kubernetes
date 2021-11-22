@@ -150,6 +150,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
+  azure_policy {
+    enabled = var.enable_azure_policy
+  }
+
   tags = merge({ "ResourceName" = lower(var.name) }, var.tags, )
 
   lifecycle {

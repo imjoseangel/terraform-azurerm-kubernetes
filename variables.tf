@@ -197,6 +197,12 @@ variable "enable_role_based_access_control" {
   default     = true
 }
 
+variable "enable_azure_policy" {
+  description = "Enable Azure Policy for Kubernetes Add On."
+  type        = bool
+  default     = true
+}
+
 variable "rbac_aad_managed" {
   description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration."
   type        = bool
