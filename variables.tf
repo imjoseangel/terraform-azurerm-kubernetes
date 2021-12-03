@@ -18,9 +18,15 @@ variable "location" {
 }
 
 variable "prefix" {
-  description = "The prefix for the resources created in the specified Azure Resource Group"
+  description = "The DNS prefix for the Cluster"
   type        = string
-  default     = "default"
+  default     = null
+}
+
+variable "prefix_private_cluster" {
+  description = "The private DNS prefix for the Cluster"
+  type        = string
+  default     = null
 }
 
 variable "default_vm_size" {
