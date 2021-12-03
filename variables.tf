@@ -53,6 +53,12 @@ variable "private_cluster_public_fqdn_enabled" {
   default     = false
 }
 
+variable "private_dns_zone_id" {
+  description = "(Optional) Either the ID of Private DNS Zone which should be delegated to this Cluster, System to have AKS manage this or None. In case of None you will need to bring your own DNS server and set up resolving, otherwise cluster will have issues after provisioning."
+  type        = string
+  default     = "System"
+}
+
 variable "enable_kube_dashboard" {
   description = "Enable Kubernetes Dashboard."
   type        = bool
