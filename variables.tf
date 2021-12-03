@@ -23,12 +23,6 @@ variable "prefix" {
   default     = null
 }
 
-variable "prefix_private_cluster" {
-  description = "The private DNS prefix for the Cluster"
-  type        = string
-  default     = null
-}
-
 variable "default_vm_size" {
   description = "The size of the Virtual Machine, such as Standard_D2s_V4"
   type        = string
