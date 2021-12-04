@@ -47,7 +47,7 @@ data "azuread_group" "main" {
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
   name                                = lower(var.name)
-  location                            = local.location
+  location                            = var.location
   resource_group_name                 = local.resource_group_name
   node_resource_group                 = var.node_resource_group
   dns_prefix                          = (var.private_cluster_enabled && var.private_dns_zone_id != "None" && var.private_dns_zone_id != "System") ? null : var.prefix
