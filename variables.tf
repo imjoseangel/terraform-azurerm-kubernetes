@@ -212,7 +212,7 @@ variable "enable_azure_policy" {
 variable "rbac_aad_managed" {
   description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "azure_rbac_enabled" {
