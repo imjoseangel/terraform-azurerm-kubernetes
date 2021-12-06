@@ -378,3 +378,9 @@ variable "outbound_type" {
   type        = string
   default     = "loadBalancer"
 }
+
+variable "local_account_disabled" {
+  description = "(Optional) If set to true, the cluster will not be able to use the local resource access control feature."
+  type        = bool
+  default     = true
+}
