@@ -364,7 +364,7 @@ variable "tags" {
 variable "identity_type" {
   description = "Type type of identity used for the managed cluster. Possible values are 'SystemAssigned' and 'UserAssigned'. If 'UserAssigned' is set, a 'user_assigned_identity_id' must be set as well."
   type        = string
-  default     = "UserAssigned"
+  default     = "SystemAssigned"
 }
 
 variable "user_assigned_identity_id" {
