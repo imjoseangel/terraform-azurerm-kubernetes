@@ -218,7 +218,7 @@ variable "rbac_aad_managed" {
 variable "azure_rbac_enabled" {
   description = "(Optional) Is Role Based Access Control based on Azure AD enabled?"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "rbac_aad_admin_group" {
@@ -382,5 +382,5 @@ variable "outbound_type" {
 variable "local_account_disabled" {
   description = "(Optional) If set to true, the cluster will not be able to use the local resource access control feature."
   type        = bool
-  default     = false
+  default     = true
 }
