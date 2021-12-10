@@ -384,3 +384,21 @@ variable "local_account_disabled" {
   type        = bool
   default     = true
 }
+
+variable "enable_azure_keyvault_secrets_provider" {
+  description = "Is the Azure Keyvault Screts Provider enabled?."
+  type        = bool
+  default     = true
+}
+
+variable "secret_rotation_enabled" {
+  description = "(Optional) Is secret rotation enabled."
+  type        = bool
+  default     = true
+}
+
+variable "secret_rotation_interval" {
+  description = "(Optional) The interval to poll for secret rotation. Defaults to 2 minutes."
+  type        = string
+  default     = "2m"
+}

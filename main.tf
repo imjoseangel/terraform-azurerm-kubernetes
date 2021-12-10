@@ -122,6 +122,12 @@ resource "azurerm_kubernetes_cluster" "main" {
       enabled = var.enable_azure_policy
     }
 
+    azure_keyvault_secrets_provider {
+      enabled                  = var.enable_azure_keyvault_secrets_provider
+      secret_rotation_enabled  = var.secret_rotation_enabled
+      secret_rotation_interval = var.secret_rotation_enabled ? var.secret_rotation_interval : null
+    }
+
     dynamic "ingress_application_gateway" {
       for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
       content {
