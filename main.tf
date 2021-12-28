@@ -142,6 +142,12 @@ resource "azurerm_kubernetes_cluster" "main" {
     user_assigned_identity_id = var.user_assigned_identity_id
   }
 
+  kubelet_identity {
+    client_id                 = var.kubelet_client_id
+    object_id                 = var.kubelet_object_id
+    user_assigned_identity_id = var.kubelet_user_assigned_identity_id
+  }
+
   network_profile {
     #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
     load_balancer_sku = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "Standard"
