@@ -426,3 +426,15 @@ variable "automatic_channel_upgrade" {
   type        = string
   default     = "stable"
 }
+
+variable "windows_proximity_placement_group_id" {
+  description = "(Optional) The ID of the proximity placement group to use for the Windows node pool."
+  type        = string
+  default     = null
+}
+
+variable "linux_proximity_placement_group_id" {
+  description = "(Optional) The ID of the proximity placement group to use for the Linux node pool."
+  type        = string
+  default     = null
+}

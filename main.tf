@@ -181,38 +181,40 @@ resource "azurerm_kubernetes_cluster" "main" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows" {
-  count                 = var.windows_node_pool_enabled ? 1 : 0
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
-  name                  = substr(lower(var.windows_pool_name), 0, 6)
-  node_count            = var.enable_windows_auto_scaling == false ? var.windows_node_count : null
-  vm_size               = var.windows_vm_size
-  os_disk_size_gb       = var.windows_os_disk_size_gb
-  os_disk_type          = var.windows_os_disk_type
-  vnet_subnet_id        = var.vnet_subnet_id
-  enable_auto_scaling   = var.enable_windows_auto_scaling
-  max_count             = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
-  min_count             = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
-  availability_zones    = var.availability_zones
-  max_pods              = var.max_default_windows_pod_count
-  node_taints           = ["os=windows:NoSchedule"]
-  os_type               = "Windows"
+  count                        = var.windows_node_pool_enabled ? 1 : 0
+  kubernetes_cluster_id        = azurerm_kubernetes_cluster.main.id
+  name                         = substr(lower(var.windows_pool_name), 0, 6)
+  node_count                   = var.enable_windows_auto_scaling == false ? var.windows_node_count : null
+  vm_size                      = var.windows_vm_size
+  os_disk_size_gb              = var.windows_os_disk_size_gb
+  os_disk_type                 = var.windows_os_disk_type
+  vnet_subnet_id               = var.vnet_subnet_id
+  enable_auto_scaling          = var.enable_windows_auto_scaling
+  max_count                    = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
+  min_count                    = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
+  availability_zones           = var.availability_zones
+  max_pods                     = var.max_default_windows_pod_count
+  node_taints                  = ["os=windows:NoSchedule"]
+  proximity_placement_group_id = var.windows_proximity_placement_group_id
+  os_type                      = "Windows"
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "linux" {
-  count                 = var.linux_node_pool_enabled ? 1 : 0
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
-  name                  = substr(lower(var.linux_pool_name), 0, 12)
-  node_count            = var.enable_linux_auto_scaling == false ? var.linux_node_count : null
-  vm_size               = var.linux_vm_size
-  os_disk_size_gb       = var.linux_os_disk_size_gb
-  os_disk_type          = var.linux_os_disk_type
-  vnet_subnet_id        = var.linux_vnet_subnet_id
-  enable_auto_scaling   = var.enable_linux_auto_scaling
-  max_count             = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
-  min_count             = var.enable_linux_auto_scaling ? var.min_default_linux_node_count : null
-  availability_zones    = var.availability_zones
-  max_pods              = var.max_default_linux_pod_count
-  os_type               = "Linux"
+  count                        = var.linux_node_pool_enabled ? 1 : 0
+  kubernetes_cluster_id        = azurerm_kubernetes_cluster.main.id
+  name                         = substr(lower(var.linux_pool_name), 0, 12)
+  node_count                   = var.enable_linux_auto_scaling == false ? var.linux_node_count : null
+  vm_size                      = var.linux_vm_size
+  os_disk_size_gb              = var.linux_os_disk_size_gb
+  os_disk_type                 = var.linux_os_disk_type
+  vnet_subnet_id               = var.linux_vnet_subnet_id
+  enable_auto_scaling          = var.enable_linux_auto_scaling
+  max_count                    = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
+  min_count                    = var.enable_linux_auto_scaling ? var.min_default_linux_node_count : null
+  availability_zones           = var.availability_zones
+  max_pods                     = var.max_default_linux_pod_count
+  proximity_placement_group_id = var.linux_proximity_placement_group_id
+  os_type                      = "Linux"
 }
 
 
