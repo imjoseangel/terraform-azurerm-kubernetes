@@ -151,10 +151,14 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
-    load_balancer_sku = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "Standard"
-    network_plugin    = var.windows_node_pool_enabled ? "azure" : var.network_plugin
-    network_policy    = var.network_policy
-    outbound_type     = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
+    load_balancer_sku  = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "Standard"
+    network_plugin     = var.windows_node_pool_enabled ? "azure" : var.network_plugin
+    network_policy     = var.network_policy
+    outbound_type      = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
+    dns_service_ip     = var.dns_service_ip
+    docker_bridge_cidr = var.docker_bridge_cidr
+    service_cidr       = var.service_cidr
+    pod_cidr           = var.network_plugin == "kubenet" ? var.pod_cidr : null
   }
 
   role_based_access_control {

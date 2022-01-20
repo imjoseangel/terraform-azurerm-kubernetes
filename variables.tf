@@ -56,7 +56,7 @@ variable "private_cluster_public_fqdn_enabled" {
 variable "private_dns_zone_id" {
   description = "(Optional) Either the ID of Private DNS Zone which should be delegated to this Cluster, System to have AKS manage this or None. In case of None you will need to bring your own DNS server and set up resolving, otherwise cluster will have issues after provisioning."
   type        = string
-  default     = "System"
+  default     = null
 }
 
 variable "enable_kube_dashboard" {
@@ -435,6 +435,30 @@ variable "windows_proximity_placement_group_id" {
 
 variable "linux_proximity_placement_group_id" {
   description = "(Optional) The ID of the proximity placement group to use for the Linux node pool."
+  type        = string
+  default     = null
+}
+
+variable "pod_cidr" {
+  description = "(Optional) The CIDR block to use for the Pod IPs. This field can only be set when network_plugin is set to kubenet. Changing this forces a new resource to be created."
+  type        = string
+  default     = null
+}
+
+variable "service_cidr" {
+  description = "(Optional) The Network Range used by the Kubernetes service. Changing this forces a new resource to be created. `docker_bridge_cidr`, `dns_service_ip` and `service_cidr` should all be empty or all should be set."
+  type        = string
+  default     = null
+}
+
+variable "docker_bridge_cidr" {
+  description = "(Optional) IP address (in CIDR notation) used as the Docker bridge IP address on nodes. Changing this forces a new resource to be created. `docker_bridge_cidr`, `dns_service_ip` and `service_cidr` should all be empty or all should be set."
+  type        = string
+  default     = null
+}
+
+variable "dns_service_ip" {
+  description = "(Optional) IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns). Changing this forces a new resource to be created. `docker_bridge_cidr`, `dns_service_ip` and `service_cidr` should all be empty or all should be set."
   type        = string
   default     = null
 }
