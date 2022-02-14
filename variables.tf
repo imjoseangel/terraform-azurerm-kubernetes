@@ -44,7 +44,7 @@ variable "sku_tier" {
 variable "private_cluster_enabled" {
   description = "If true cluster API server will be exposed only on internal IP address and available only in cluster vnet."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "private_cluster_public_fqdn_enabled" {
