@@ -59,12 +59,6 @@ variable "private_dns_zone_id" {
   default     = null
 }
 
-variable "enable_kube_dashboard" {
-  description = "Enable Kubernetes Dashboard."
-  type        = bool
-  default     = false
-}
-
 variable "authorized_ips" {
   description = "A list of IP addresses to allow to connect to the cluster."
   type        = list(string)
@@ -369,7 +363,7 @@ variable "identity_type" {
 
 variable "user_assigned_identity_id" {
   description = "(Optional) the ID of a user assigned identity"
-  type        = string
+  type        = list(string)
   default     = null
 }
 

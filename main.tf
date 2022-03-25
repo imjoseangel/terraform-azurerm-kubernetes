@@ -59,6 +59,8 @@ resource "azurerm_kubernetes_cluster" "main" {
   private_dns_zone_id                 = var.private_dns_zone_id
   local_account_disabled              = var.local_account_disabled
   automatic_channel_upgrade           = var.automatic_channel_upgrade
+  http_application_routing_enabled    = false
+  azure_policy_enabled                = var.enable_azure_policy
 
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
@@ -72,7 +74,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       enable_auto_scaling          = var.enable_auto_scaling
       max_count                    = null
       min_count                    = null
-      availability_zones           = var.availability_zones
+      zones                        = var.availability_zones
       max_pods                     = var.max_default_pod_count
       type                         = "VirtualMachineScaleSets"
       only_critical_addons_enabled = var.system_only
@@ -82,18 +84,19 @@ resource "azurerm_kubernetes_cluster" "main" {
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? ["default_node_pool_auto_scaled"] : []
     content {
-      name                         = substr(lower(var.node_pool_name), 0, 12)
-      vm_size                      = var.default_vm_size
-      os_disk_size_gb              = var.os_disk_size_gb
-      os_disk_type                 = var.os_disk_type
-      vnet_subnet_id               = var.vnet_subnet_id
-      enable_auto_scaling          = var.enable_auto_scaling
-      max_count                    = var.max_default_node_count
-      min_count                    = var.min_default_node_count
-      availability_zones           = var.availability_zones
-      max_pods                     = var.max_default_pod_count
-      type                         = "VirtualMachineScaleSets"
-      only_critical_addons_enabled = var.system_only
+      name                              = substr(lower(var.node_pool_name), 0, 12)
+      vm_size                           = var.default_vm_size
+      os_disk_size_gb                   = var.os_disk_size_gb
+      os_disk_type                      = var.os_disk_type
+      vnet_subnet_id                    = var.vnet_subnet_id
+      enable_auto_scaling               = var.enable_auto_scaling
+      max_count                         = var.max_default_node_count
+      min_count                         = var.min_default_node_count
+      zones                             = var.availability_zones
+      max_pods                          = var.max_default_pod_count
+      type                              = "VirtualMachineScaleSets"
+      only_critical_addons_enabled      = var.system_only
+      role_based_access_control_enabled = var.enable_role_based_access_control
     }
   }
 
@@ -105,42 +108,29 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
-  addon_profile {
-    oms_agent {
-      enabled                    = var.oms_agent_enabled
-      log_analytics_workspace_id = var.oms_agent_enabled ? data.azurerm_log_analytics_workspace.main[0].id : null
-    }
+  oms_agent {
+    log_analytics_workspace_id = var.oms_agent_enabled ? data.azurerm_log_analytics_workspace.main[0].id : null
+  }
 
-    http_application_routing {
-      enabled = false
-    }
-
-    kube_dashboard {
-      enabled = var.enable_kube_dashboard
-    }
-
-    azure_policy {
-      enabled = var.enable_azure_policy
-    }
-
-    azure_keyvault_secrets_provider {
-      enabled                  = var.enable_azure_keyvault_secrets_provider
+  dynamic "key_vault_secrets_provider" {
+    for_each = var.enable_azure_keyvault_secrets_provider ? [true] : []
+    content {
       secret_rotation_enabled  = var.secret_rotation_enabled
       secret_rotation_interval = var.secret_rotation_enabled ? var.secret_rotation_interval : null
     }
+  }
 
-    dynamic "ingress_application_gateway" {
-      for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
-      content {
-        enabled    = var.create_ingress
-        gateway_id = var.gateway_id
-      }
+
+  dynamic "ingress_application_gateway" {
+    for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
+    content {
+      gateway_id = var.gateway_id
     }
   }
 
   identity {
-    type                      = var.identity_type
-    user_assigned_identity_id = var.user_assigned_identity_id
+    type         = var.identity_type
+    identity_ids = var.user_assigned_identity_id
   }
 
   kubelet_identity {
@@ -161,24 +151,21 @@ resource "azurerm_kubernetes_cluster" "main" {
     pod_cidr           = var.network_plugin == "kubenet" ? var.pod_cidr : null
   }
 
-  role_based_access_control {
-    enabled = var.enable_role_based_access_control
-
-    dynamic "azure_active_directory" {
-      for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
-      content {
-        managed                = true
-        admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
-        azure_rbac_enabled     = var.azure_rbac_enabled
-      }
+  dynamic "azure_active_directory_role_based_access_control" {
+    for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
+    content {
+      managed                = true
+      admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
+      azure_rbac_enabled     = var.azure_rbac_enabled
     }
+
   }
 
   tags = merge({ "ResourceName" = lower(var.name) }, var.tags, )
 
   lifecycle {
     ignore_changes = [
-      default_node_pool[0].node_count, tags, linux_profile.0.ssh_key, role_based_access_control.0.azure_active_directory.0.admin_group_object_ids
+      default_node_pool[0].node_count, tags, linux_profile.0.ssh_key, azure_active_directory_role_based_access_control.0.admin_group_object_ids
     ]
   }
 
@@ -196,7 +183,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   enable_auto_scaling          = var.enable_windows_auto_scaling
   max_count                    = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
   min_count                    = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
-  availability_zones           = var.availability_zones
+  zones                        = var.availability_zones
   max_pods                     = var.max_default_windows_pod_count
   node_taints                  = ["os=windows:NoSchedule"]
   proximity_placement_group_id = var.windows_proximity_placement_group_id
@@ -215,7 +202,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux" {
   enable_auto_scaling          = var.enable_linux_auto_scaling
   max_count                    = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
   min_count                    = var.enable_linux_auto_scaling ? var.min_default_linux_node_count : null
-  availability_zones           = var.availability_zones
+  zones                        = var.availability_zones
   max_pods                     = var.max_default_linux_pod_count
   proximity_placement_group_id = var.linux_proximity_placement_group_id
   os_type                      = "Linux"
