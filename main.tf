@@ -107,7 +107,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       key_data = replace(var.public_ssh_key == "" ? tls_private_key.ssh.public_key_openssh : var.public_ssh_key, "\n", "")
     }
   }
-  
+
   dynamic "oms_agent" {
     for_each = var.oms_agent_enabled ? [true] : []
     content {
