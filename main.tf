@@ -107,9 +107,12 @@ resource "azurerm_kubernetes_cluster" "main" {
       key_data = replace(var.public_ssh_key == "" ? tls_private_key.ssh.public_key_openssh : var.public_ssh_key, "\n", "")
     }
   }
-
-  oms_agent {
-    log_analytics_workspace_id = var.oms_agent_enabled ? data.azurerm_log_analytics_workspace.main[0].id : null
+  
+  dynamic "oms_agent" {
+    for_each = var.oms_agent_enabled ? [true] : []
+    content {
+      log_analytics_workspace_id = data.azurerm_log_analytics_workspace.main[0].id
+    }
   }
 
   dynamic "key_vault_secrets_provider" {
