@@ -147,12 +147,6 @@ variable "log_analytics_resource_group" {
   default     = null
 }
 
-variable "log_retention_in_days" {
-  description = "The retention period for the logs in days. The expected value should be between 30 to 730"
-  type        = number
-  default     = 30
-}
-
 variable "create_ingress" {
   description = "Deploy the Application Gateway ingress controller to this Kubernetes Cluster"
   type        = bool

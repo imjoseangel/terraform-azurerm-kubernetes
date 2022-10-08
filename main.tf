@@ -6,8 +6,6 @@ locals {
   location            = element(coalescelist(data.azurerm_resource_group.rgrp.*.location, azurerm_resource_group.rg.*.location, [""]), 0)
 }
 
-data "azurerm_client_config" "current" {}
-
 #---------------------------------------------------------
 # Resource Group Creation or selection - Default is "true"
 #---------------------------------------------------------
@@ -47,7 +45,7 @@ data "azuread_group" "main" {
 #---------------------------------------------------------
 resource "azurerm_kubernetes_cluster" "main" {
   name                                = lower(var.name)
-  location                            = var.location
+  location                            = local.location
   resource_group_name                 = local.resource_group_name
   node_resource_group                 = var.node_resource_group
   dns_prefix                          = (var.private_cluster_enabled && var.private_dns_zone_id != "None" && var.private_dns_zone_id != "System") ? null : var.prefix
