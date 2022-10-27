@@ -201,6 +201,12 @@ variable "enable_azure_policy" {
   default     = true
 }
 
+variable "balance_similar_node_groups" {
+  description = "Detect similar node groups and balance the number of nodes between them. Defaults to false."
+  type        = bool
+  default     = false
+}
+
 variable "rbac_aad_managed" {
   description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration."
   type        = bool

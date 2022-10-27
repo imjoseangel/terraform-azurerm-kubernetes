@@ -153,6 +153,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     pod_cidr           = var.network_plugin == "kubenet" ? var.pod_cidr : null
   }
 
+  auto_scaler_profile {
+    balance_similar_node_groups = var.balance_similar_node_groups
+  }
+
   dynamic "azure_active_directory_role_based_access_control" {
     for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
     content {
