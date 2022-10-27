@@ -2,8 +2,8 @@
 # Local Declarations
 #-------------------------------
 locals {
-  resource_group_name = element(coalescelist(data.azurerm_resource_group.rgrp.*.name, azurerm_resource_group.rg.*.name, [""]), 0)
-  location            = element(coalescelist(data.azurerm_resource_group.rgrp.*.location, azurerm_resource_group.rg.*.location, [""]), 0)
+  resource_group_name = element(coalescelist(data.azurerm_resource_group.rgrp[*].name, azurerm_resource_group.rg[*].name, [""]), 0)
+  location            = element(coalescelist(data.azurerm_resource_group.rgrp[*].location, azurerm_resource_group.rg[*].location, [""]), 0)
 }
 
 #---------------------------------------------------------
@@ -56,6 +56,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   private_cluster_public_fqdn_enabled = var.private_cluster_public_fqdn_enabled
   private_dns_zone_id                 = var.private_dns_zone_id
   local_account_disabled              = var.local_account_disabled
+  run_command_enabled                 = var.run_command_enabled
   automatic_channel_upgrade           = var.automatic_channel_upgrade
   http_application_routing_enabled    = false
   azure_policy_enabled                = var.enable_azure_policy

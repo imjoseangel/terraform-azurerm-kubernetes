@@ -395,6 +395,12 @@ variable "local_account_disabled" {
   default     = true
 }
 
+variable "run_command_enabled" {
+  description = "(Optional) Whether to enable run command for the cluster or not."
+  type        = bool
+  default     = false
+}
+
 variable "enable_azure_keyvault_secrets_provider" {
   description = "Is the Azure Keyvault Screts Provider enabled?."
   type        = bool
