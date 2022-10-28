@@ -407,6 +407,12 @@ variable "run_command_enabled" {
   default     = false
 }
 
+variable "oidc_issuer_enabled" {
+  description = "(Required) Enable or Disable the OIDC issuer URL."
+  type        = bool
+  default     = true
+}
+
 variable "enable_azure_keyvault_secrets_provider" {
   description = "Is the Azure Keyvault Screts Provider enabled?."
   type        = bool

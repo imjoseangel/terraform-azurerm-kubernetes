@@ -57,6 +57,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   private_dns_zone_id                 = var.private_dns_zone_id
   local_account_disabled              = var.local_account_disabled
   run_command_enabled                 = var.run_command_enabled
+  oidc_issuer_enabled                 = var.oidc_issuer_enabled
   automatic_channel_upgrade           = var.automatic_channel_upgrade
   http_application_routing_enabled    = false
   azure_policy_enabled                = var.enable_azure_policy
