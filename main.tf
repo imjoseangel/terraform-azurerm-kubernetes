@@ -195,6 +195,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   node_taints                  = ["os=windows:NoSchedule"]
   proximity_placement_group_id = var.windows_proximity_placement_group_id
   os_type                      = "Windows"
+  os_sku                       = "Windows2022"
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "linux" {
