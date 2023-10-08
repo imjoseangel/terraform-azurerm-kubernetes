@@ -50,7 +50,6 @@ resource "azurerm_kubernetes_cluster" "main" {
   node_resource_group                 = var.node_resource_group
   dns_prefix                          = (var.private_cluster_enabled && var.private_dns_zone_id != "None" && var.private_dns_zone_id != "System") ? null : var.prefix
   dns_prefix_private_cluster          = (var.private_cluster_enabled && var.private_dns_zone_id != "None" && var.private_dns_zone_id != "System") ? var.prefix : null
-  api_server_authorized_ip_ranges     = var.authorized_ips
   sku_tier                            = var.sku_tier
   private_cluster_enabled             = var.private_cluster_enabled
   private_cluster_public_fqdn_enabled = var.private_cluster_public_fqdn_enabled
@@ -143,14 +142,13 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
-    load_balancer_sku  = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "standard"
-    network_plugin     = var.windows_node_pool_enabled ? "azure" : var.network_plugin
-    network_policy     = var.network_policy
-    outbound_type      = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
-    dns_service_ip     = var.dns_service_ip
-    docker_bridge_cidr = var.docker_bridge_cidr
-    service_cidr       = var.service_cidr
-    pod_cidr           = var.network_plugin == "kubenet" ? var.pod_cidr : null
+    load_balancer_sku = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "standard"
+    network_plugin    = var.windows_node_pool_enabled ? "azure" : var.network_plugin
+    network_policy    = var.network_policy
+    outbound_type     = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
+    dns_service_ip    = var.dns_service_ip
+    service_cidr      = var.service_cidr
+    pod_cidr          = var.network_plugin == "kubenet" ? var.pod_cidr : null
   }
 
   auto_scaler_profile {
