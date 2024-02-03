@@ -419,6 +419,12 @@ variable "enable_azure_keyvault_secrets_provider" {
   default     = true
 }
 
+variable "enable_api_server_access_profile" {
+  description = "Is the Api Server Access Profile enabled?."
+  type        = bool
+  default     = false
+}
+
 variable "secret_rotation_enabled" {
   description = "(Optional) Is secret rotation enabled."
   type        = bool
@@ -457,12 +463,6 @@ variable "pod_cidr" {
 
 variable "service_cidr" {
   description = "(Optional) The Network Range used by the Kubernetes service. Changing this forces a new resource to be created. `docker_bridge_cidr`, `dns_service_ip` and `service_cidr` should all be empty or all should be set."
-  type        = string
-  default     = null
-}
-
-variable "docker_bridge_cidr" {
-  description = "(Optional) IP address (in CIDR notation) used as the Docker bridge IP address on nodes. Changing this forces a new resource to be created. `docker_bridge_cidr`, `dns_service_ip` and `service_cidr` should all be empty or all should be set."
   type        = string
   default     = null
 }

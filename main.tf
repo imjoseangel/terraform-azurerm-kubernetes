@@ -121,11 +121,17 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
-
   dynamic "ingress_application_gateway" {
     for_each = (var.create_ingress && var.gateway_id != null) ? [true] : []
     content {
       gateway_id = var.gateway_id
+    }
+  }
+
+  dynamic "api_server_access_profile" {
+    for_each = var.enable_api_server_access_profile ? [true] : []
+    content {
+      authorized_ip_ranges = var.authorized_ips
     }
   }
 
