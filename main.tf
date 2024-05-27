@@ -164,7 +164,6 @@ resource "azurerm_kubernetes_cluster" "main" {
   dynamic "azure_active_directory_role_based_access_control" {
     for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
     content {
-      managed                = true
       admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
       azure_rbac_enabled     = var.azure_rbac_enabled
     }
