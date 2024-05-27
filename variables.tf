@@ -100,7 +100,13 @@ variable "network_plugin" {
 }
 
 variable "network_policy" {
-  description = "Network policy to use for networking."
+  description = "(Optional) Sets up network policy to be used with Azure CNI. Network policy allows us to control the traffic flow between pods. Currently supported values are calico, azure and cilium"
+  type        = string
+  default     = null
+}
+
+variable "network_plugin_mode" {
+  description = "(Optional) Specifies the network plugin mode used for building the Kubernetes network. Possible value is overlay."
   type        = string
   default     = null
 }
