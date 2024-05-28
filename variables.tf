@@ -240,7 +240,7 @@ variable "enable_role_based_access_control" {
 variable "enable_azure_policy" {
   description = "Enable Azure Policy for Kubernetes Add On."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "balance_similar_node_groups" {
