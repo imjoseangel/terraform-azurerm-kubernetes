@@ -96,7 +96,7 @@ variable "node_pool_name" {
 variable "network_plugin" {
   description = "Network plugin to use for networking."
   type        = string
-  default     = "kubenet"
+  default     = "azure"
 }
 
 variable "network_policy" {
@@ -108,7 +108,7 @@ variable "network_policy" {
 variable "network_plugin_mode" {
   description = "(Optional) Specifies the network plugin mode used for building the Kubernetes network. Possible value is overlay."
   type        = string
-  default     = null
+  default     = "overlay"
 }
 
 variable "public_ssh_key" {
@@ -193,6 +193,42 @@ variable "os_disk_type" {
   description = "The type of disk which should be used for the Operating System."
   type        = string
   default     = "Ephemeral"
+}
+
+variable "os_sku" {
+  description = "(Optional) Specifies the OS SKU used by the agent pool. Possible values are AzureLinux, Ubuntu, Windows2019 and Windows2022"
+  type        = string
+  default     = "AzureLinux"
+}
+
+variable "enable_image_cleaner" {
+  description = "(Optional) Specifies whether Image Cleaner is enabled."
+  type        = bool
+  default     = true
+}
+
+variable "image_cleaner_interval_hours" {
+  description = "(Optional) Specifies the interval in hours when images should be cleaned up. Defaults to 48."
+  type        = number
+  default     = 48
+}
+
+variable "enable_workload_identity" {
+  description = "(Optional) Specifies whether Azure AD Workload Identity should be enabled for the Cluster. Defaults to true."
+  type        = bool
+  default     = true
+}
+
+variable "enable_keda" {
+  description = "(Optional) Specifies whether KEDA Autoscaler can be used for workloads."
+  type        = bool
+  default     = true
+}
+
+variable "enable_vpa" {
+  description = "(Optional) Specifies whether Vertical Pod Autoscaler should be enabled."
+  type        = bool
+  default     = true
 }
 
 variable "enable_role_based_access_control" {
@@ -288,7 +324,7 @@ variable "min_default_windows_node_count" {
 variable "max_default_pod_count" {
   description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
   type        = number
-  default     = 30
+  default     = 110
 }
 
 variable "max_default_windows_pod_count" {
@@ -356,7 +392,7 @@ variable "min_default_linux_node_count" {
 variable "max_default_linux_pod_count" {
   description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
   type        = number
-  default     = 30
+  default     = 110
 }
 
 variable "tags" {

@@ -60,6 +60,9 @@ resource "azurerm_kubernetes_cluster" "main" {
   automatic_channel_upgrade           = var.automatic_channel_upgrade
   http_application_routing_enabled    = false
   azure_policy_enabled                = var.enable_azure_policy
+  image_cleaner_enabled               = var.enable_image_cleaner
+  image_cleaner_interval_hours        = var.image_cleaner_interval_hours
+  workload_identity_enabled           = var.oidc_issuer_enabled ? var.enable_workload_identity : false
 
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
@@ -69,6 +72,8 @@ resource "azurerm_kubernetes_cluster" "main" {
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
       os_disk_type                 = var.os_disk_type
+      os_sku                       = var.os_sku
+      temporary_name_for_rotation  = "temp"
       vnet_subnet_id               = var.vnet_subnet_id
       enable_auto_scaling          = var.enable_auto_scaling
       max_count                    = null
@@ -87,6 +92,8 @@ resource "azurerm_kubernetes_cluster" "main" {
       vm_size                      = var.default_vm_size
       os_disk_size_gb              = var.os_disk_size_gb
       os_disk_type                 = var.os_disk_type
+      os_sku                       = var.os_sku
+      temporary_name_for_rotation  = "temp"
       vnet_subnet_id               = var.vnet_subnet_id
       enable_auto_scaling          = var.enable_auto_scaling
       max_count                    = var.max_default_node_count
@@ -151,6 +158,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     load_balancer_sku   = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "standard"
     network_plugin      = var.windows_node_pool_enabled || var.network_plugin_mode == "overlay" ? "azure" : var.network_plugin
     network_policy      = var.network_policy
+    ebpf_data_plane     = var.network_policy == "cilium" ? "cilium" : null
     outbound_type       = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
     dns_service_ip      = var.dns_service_ip
     service_cidr        = var.service_cidr
@@ -162,9 +170,15 @@ resource "azurerm_kubernetes_cluster" "main" {
     balance_similar_node_groups = var.balance_similar_node_groups
   }
 
+  workload_autoscaler_profile {
+    keda_enabled                    = var.enable_keda
+    vertical_pod_autoscaler_enabled = var.enable_vpa
+  }
+
   dynamic "azure_active_directory_role_based_access_control" {
     for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
     content {
+      managed                = var.rbac_aad_managed
       admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
       azure_rbac_enabled     = var.azure_rbac_enabled
     }
@@ -209,6 +223,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux" {
   vm_size                      = var.linux_vm_size
   os_disk_size_gb              = var.linux_os_disk_size_gb
   os_disk_type                 = var.linux_os_disk_type
+  os_sku                       = var.os_sku
   vnet_subnet_id               = var.linux_vnet_subnet_id
   enable_auto_scaling          = var.enable_linux_auto_scaling
   max_count                    = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
