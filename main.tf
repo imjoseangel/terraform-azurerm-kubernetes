@@ -166,6 +166,12 @@ resource "azurerm_kubernetes_cluster" "main" {
     network_plugin_mode = var.network_plugin_mode
   }
 
+  storage_profile {
+    blob_driver_enabled = var.enable_blob_driver
+    disk_driver_enabled = var.enable_disk_driver
+    file_driver_enabled = var.enable_file_driver
+  }
+
   auto_scaler_profile {
     balance_similar_node_groups = var.balance_similar_node_groups
   }

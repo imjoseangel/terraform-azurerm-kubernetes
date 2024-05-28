@@ -514,3 +514,21 @@ variable "dns_service_ip" {
   type        = string
   default     = null
 }
+
+variable "enable_blob_driver" {
+  description = "(Optional) Is the Blob CSI driver enabled? Defaults to true."
+  type        = bool
+  default     = true
+}
+
+variable "enable_disk_driver" {
+  description = "(Optional) Is the Disk CSI driver enabled? Defaults to true."
+  type        = bool
+  default     = true
+}
+
+variable "enable_file_driver" {
+  description = "(Optional) Is the File CSI driver enabled? Defaults to true."
+  type        = bool
+  default     = true
+}
