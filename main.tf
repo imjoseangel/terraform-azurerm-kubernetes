@@ -72,7 +72,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   local_account_disabled              = var.local_account_disabled
   run_command_enabled                 = var.run_command_enabled
   oidc_issuer_enabled                 = var.oidc_issuer_enabled
-  automatic_channel_upgrade           = var.automatic_channel_upgrade
+  automatic_upgrade_channel           = var.automatic_upgrade_channel
   http_application_routing_enabled    = false
   azure_policy_enabled                = var.enable_azure_policy
   image_cleaner_enabled               = var.enable_image_cleaner
@@ -90,7 +90,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       os_sku                       = var.os_sku
       temporary_name_for_rotation  = "temp"
       vnet_subnet_id               = var.vnet_subnet_id
-      enable_auto_scaling          = var.enable_auto_scaling
+      auto_scaling_enabled         = var.enable_auto_scaling
       max_count                    = null
       min_count                    = null
       zones                        = var.availability_zones
@@ -110,7 +110,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       os_sku                       = var.os_sku
       temporary_name_for_rotation  = "temp"
       vnet_subnet_id               = var.vnet_subnet_id
-      enable_auto_scaling          = var.enable_auto_scaling
+      auto_scaling_enabled         = var.enable_auto_scaling
       max_count                    = var.max_default_node_count
       min_count                    = var.min_default_node_count
       zones                        = var.availability_zones
@@ -231,7 +231,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows" {
   os_disk_size_gb              = var.windows_os_disk_size_gb
   os_disk_type                 = var.windows_os_disk_type
   vnet_subnet_id               = var.vnet_subnet_id
-  enable_auto_scaling          = var.enable_windows_auto_scaling
+  auto_scaling_enabled         = var.enable_windows_auto_scaling
   max_count                    = var.enable_windows_auto_scaling ? var.max_default_windows_node_count : null
   min_count                    = var.enable_windows_auto_scaling ? var.min_default_windows_node_count : null
   zones                        = var.availability_zones
@@ -252,7 +252,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux" {
   os_disk_type                 = var.linux_os_disk_type
   os_sku                       = var.os_sku
   vnet_subnet_id               = var.linux_vnet_subnet_id
-  enable_auto_scaling          = var.enable_linux_auto_scaling
+  auto_scaling_enabled         = var.enable_linux_auto_scaling
   max_count                    = var.enable_linux_auto_scaling ? var.max_default_linux_node_count : null
   min_count                    = var.enable_linux_auto_scaling ? var.min_default_linux_node_count : null
   zones                        = var.availability_zones

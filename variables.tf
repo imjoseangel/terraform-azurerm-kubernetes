@@ -479,7 +479,7 @@ variable "secret_rotation_interval" {
   default     = "2m"
 }
 
-variable "automatic_channel_upgrade" {
+variable "automatic_upgrade_channel" {
   description = "(Optional) the upgrade channel for this Kubernetes Cluster. Possible values are 'patch', 'rapid', 'node-image' and 'stable'. Defaults to 'stable'."
   type        = string
   default     = "stable"
