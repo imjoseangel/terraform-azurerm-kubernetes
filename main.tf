@@ -32,6 +32,21 @@ resource "tls_private_key" "ssh" {
 }
 
 #---------------------------------------------------------
+# Windows Username and Passowrd
+#---------------------------------------------------------
+
+resource "random_string" "username" {
+  count   = var.windows_node_pool_enabled ? 1 : 0
+  length  = 17
+  special = false
+}
+
+resource "random_password" "password" {
+  count  = var.windows_node_pool_enabled ? 1 : 0
+  length = 17
+}
+
+#---------------------------------------------------------
 # Read AD Group IDs
 #---------------------------------------------------------
 
@@ -142,6 +157,14 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
+  dynamic "windows_profile" {
+    for_each = var.windows_node_pool_enabled ? [true] : []
+    content {
+      admin_password = random_password.password[0].result
+      admin_username = random_string.username[0].result
+    }
+  }
+
   identity {
     type         = var.identity_type
     identity_ids = var.user_assigned_identity_id
@@ -156,14 +179,14 @@ resource "azurerm_kubernetes_cluster" "main" {
   network_profile {
     #ts:skip=accurics.azure.NS.382 This rule should be skipped for now.
     load_balancer_sku   = length(var.availability_zones) == 0 && var.windows_node_pool_enabled == false ? var.load_balancer_sku : "standard"
-    network_plugin      = var.windows_node_pool_enabled || var.network_plugin_mode == "overlay" ? "azure" : var.network_plugin
+    network_plugin      = var.windows_node_pool_enabled || var.network_plugin_mode == "overlay" || var.network_policy == "cilium" ? "azure" : var.network_plugin
     network_policy      = var.network_policy
-    ebpf_data_plane     = var.network_policy == "cilium" ? "cilium" : null
+    network_data_plane  = var.network_policy == "cilium" ? "cilium" : "azure"
     outbound_type       = var.private_cluster_enabled ? "userDefinedRouting" : var.outbound_type
     dns_service_ip      = var.dns_service_ip
     service_cidr        = var.service_cidr
     pod_cidr            = var.network_plugin == "kubenet" || var.network_plugin_mode == "overlay" ? var.pod_cidr : null
-    network_plugin_mode = var.network_plugin_mode
+    network_plugin_mode = var.network_policy == "cilium" ? "overlay" : var.network_plugin_mode
   }
 
   storage_profile {
@@ -184,8 +207,6 @@ resource "azurerm_kubernetes_cluster" "main" {
   dynamic "azure_active_directory_role_based_access_control" {
     for_each = var.enable_role_based_access_control && var.rbac_aad_managed ? ["rbac"] : []
     content {
-      #ts:skip=accurics.azure.NS.382 Managed will be removed in version 4.
-      managed                = var.rbac_aad_managed
       admin_group_object_ids = length(var.rbac_aad_admin_group) == 0 ? var.rbac_aad_admin_group : data.azuread_group.main[*].id
       azure_rbac_enabled     = var.azure_rbac_enabled
     }
