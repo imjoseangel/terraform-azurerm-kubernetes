@@ -73,6 +73,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   run_command_enabled                 = var.run_command_enabled
   oidc_issuer_enabled                 = var.oidc_issuer_enabled
   automatic_upgrade_channel           = var.automatic_upgrade_channel
+  node_os_upgrade_channel             = var.node_os_upgrade_channel
   http_application_routing_enabled    = false
   azure_policy_enabled                = var.enable_azure_policy
   image_cleaner_enabled               = var.enable_image_cleaner

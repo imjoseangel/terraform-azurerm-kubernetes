@@ -485,6 +485,12 @@ variable "automatic_upgrade_channel" {
   default     = "stable"
 }
 
+variable "node_os_upgrade_channel" {
+  description = "(Optional) The upgrade channel for this Kubernetes Cluster Nodes' OS Image. Possible values are Unmanaged, SecurityPatch, NodeImage and None. Defaults to NodeImage."
+  type        = string
+  default     = "NodeImage"
+}
+
 variable "windows_proximity_placement_group_id" {
   description = "(Optional) The ID of the proximity placement group to use for the Windows node pool."
   type        = string
